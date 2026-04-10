@@ -55,7 +55,7 @@ const admin = {
             this.showToast("🚀 Connexion réussie !");
         } catch (err) {
             console.error("Erreur de connexion GitHub:", err);
-            alert("❌ Échec de connexion. Vérifiez votre Token GitHub et que le nom du Repo est exact.");
+            alert("❌ Échec de connexion: " + err.message + "\n\nVérifiez votre Token GitHub et que le format du Repo est bien: UTILISATEUR/REPO");
             btn.innerText = "Se connecter au Dashboard";
             btn.disabled = false;
         }
@@ -73,7 +73,10 @@ const admin = {
             headers: { 'Authorization': `token ${this.config.token}` }
         });
 
-        if (!res.ok) throw new Error("GitHub error");
+        if (!res.ok) {
+            const errorBody = await res.json();
+            throw new Error(errorBody.message || ("Code " + res.status));
+        }
 
         const data = await res.json();
         this.state.currentSha = data.sha;

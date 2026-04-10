@@ -70,7 +70,7 @@ const admin = {
     async fetchProducts() {
         const url = `https://api.github.com/repos/${this.config.repo}/contents/${this.config.path}`;
         const res = await fetch(url, {
-            headers: { 'Authorization': `token ${this.config.token}` }
+            headers: { 'Authorization': `Bearer ${this.config.token}` }
         });
 
         if (!res.ok) {
@@ -227,7 +227,7 @@ const admin = {
         const res = await fetch(url, {
             method: 'PUT',
             headers: {
-                'Authorization': `token ${this.config.token}`,
+                'Authorization': `Bearer ${this.config.token}`,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({

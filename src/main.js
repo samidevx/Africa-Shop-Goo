@@ -47,6 +47,82 @@ const navigate = (path) => {
     router();
 };
 
+const updateMeta = (name, content, attr = 'property') => {
+    let el = document.querySelector(`meta[${attr}="${name}"]`);
+    if (!el) {
+        el = document.createElement('meta');
+        el.setAttribute(attr, name);
+        document.head.appendChild(el);
+    }
+    el.setAttribute('content', content);
+};
+
+const updateSEO = (p = null) => {
+    const brand = "Lina Nightwear";
+    const baseUrl = "https://linanightwear.com";
+    const oldSchema = document.getElementById('product-schema');
+    if (oldSchema) oldSchema.remove();
+
+    if (!p) {
+        document.title = `${brand} - Boutique E-commerce & Mode`;
+        updateMeta('og:title', `${brand} - Mode & Nightwear Premium`);
+        updateMeta('og:description', "Découvrez notre collection exclusive.");
+        updateMeta('og:image', "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=1200");
+        updateMeta('og:url', baseUrl);
+        return;
+    }
+
+    const title = `${p.title} - ${brand}`;
+    const desc = p.description.replace(/<[^>]*>/g, '').slice(0, 160) + '...';
+    const url = `${baseUrl}/product/${p.id}`;
+
+    document.title = title;
+    updateMeta('description', desc, 'name');
+    updateMeta('og:title', title);
+    updateMeta('og:description', desc);
+    updateMeta('og:image', p.featuredImage);
+    updateMeta('og:url', url);
+    updateMeta('og:type', 'product');
+    updateMeta('product:price:amount', p.price);
+    updateMeta('product:price:currency', p.currency);
+
+    updateMeta('twitter:title', title, 'name');
+    updateMeta('twitter:description', desc, 'name');
+    updateMeta('twitter:image', p.featuredImage, 'name');
+
+    const schema = {
+        "@context": "https://schema.org/",
+        "@type": "Product",
+        "name": p.title,
+        "image": [p.featuredImage],
+        "description": desc,
+        "sku": p.code || p.id,
+        "brand": { "@type": "Brand", "name": brand },
+        "offers": {
+            "@type": "Offer",
+            "url": url,
+            "priceCurrency": p.currency === 'CFA' ? 'XOF' : p.currency,
+            "price": p.price,
+            "availability": "https://schema.org/InStock",
+            "itemCondition": "https://schema.org/NewCondition"
+        }
+    };
+    const script = document.createElement('script');
+    script.id = 'product-schema';
+    script.type = 'application/ld+json';
+    script.text = JSON.stringify(schema);
+    document.head.appendChild(script);
+
+    firePixel('ViewContent', {
+        content_name: p.title,
+        content_category: p.category,
+        content_ids: [p.id],
+        content_type: 'product',
+        value: p.price,
+        currency: p.currency === 'CFA' ? 'XOF' : p.currency
+    });
+};
+
 // --- ROUTER ---
 const router = () => {
     const path = window.location.pathname;
@@ -60,16 +136,19 @@ const router = () => {
     // If it starts with 'product', find id.
     if (path.endsWith('/merci') || path.endsWith('/merci/')) {
         renderMerci();
+        updateSEO();
     } else if (path.includes('/product/')) {
         const id = path.split('/product/').pop().replace(/\//g, '');
         const product = productsData.find(p => p.id === id);
         if (product) {
             renderProduct(product);
+            updateSEO(product);
         } else {
             navigate('/');
         }
     } else {
         renderHome();
+        updateSEO();
     }
     window.scrollTo(0, 0);
 };

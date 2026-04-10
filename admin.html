@@ -259,7 +259,7 @@
     <div id="login-overlay">
         <div class="login-box">
             <div class="login-ico"><i class="fa fa-lock"></i></div>
-            <h1 id="login-title">Connexion Admin</h1>
+            <h1 id="login-title" ondblclick="admin.toggleSetup()" style="cursor: help;">Connexion Admin</h1>
             <p id="login-subtitle">Entrez vos accès pour gérer Lina Nightwear.</p>
             
             <div class="form-group">
@@ -281,9 +281,9 @@
 
             <button class="login-btn" onclick="admin.login()">Accéder au Dashboard</button>
             
-            <div style="margin-top: 20px; display: flex; justify-content: space-between; align-items: center;">
-                <button onclick="admin.toggleSetup()" style="background: none; border: none; color: var(--blue); font-size: 12px; cursor: pointer; font-weight: 600;">⚙️ Config GitHub</button>
-                <p style="font-size: 11px; color: var(--text-dim);">Lina Nightwear v2.0</p>
+            <div style="margin-top: 25px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); padding-top: 15px;">
+                <button onclick="admin.toggleSetup()" style="background: rgba(59, 130, 246, 0.1); border: 1px solid var(--blue); color: var(--blue); padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: 700; transition: all 0.2s;">⚙️ Config GitHub</button>
+                <p style="font-size: 11px; color: var(--text-dim);">Lina Nightwear v2.1</p>
             </div>
         </div>
     </div>

@@ -137,7 +137,7 @@ ul,ol{list-style:none}
 
 /* PRODUCT MAIN PAGE LAYOUT */
 .product-page{max-width:800px;margin:30px auto;display:flex;flex-direction:column;gap:28px;align-items:stretch}
-@media(max-width:900px){.product-page{grid-template-columns:1fr}.order-col{order:-1}}
+@media(max-width:900px){.product-page{grid-template-columns:1fr}}
 
 .product-card{background:var(--white);border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--gray-200);box-shadow:var(--shadow)}
 

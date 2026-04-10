@@ -1,51 +1,20 @@
 [
   {
-    "id": "p1",
     "title": "Cahiers d'Écriture Réutilisables Magic Pen",
-    "price": 16900,
-    "priceOld": 24000,
+    "price": "17900",
+    "priceOld": "24000",
     "currency": "CFA",
-    "category": "Éducation",
-    "reviews": "150",
-    "stock": "1",
-    "whatsapp": "2250102030405",
-    "pays": "CI,SN,BF,TG,BJ,CM",
-    "code": "MAGIC-PEN-01",
-    "bundle": "NO",
-    "countdown": "NO",
-    "animated": "yes",
-    "gallery": "yes",
+    "id": "p1",
     "featuredImage": "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=800",
-    "images": [
-      "https://images.unsplash.com/photo-1583417319070-4a69db38a482?auto=format&fit=crop&q=80&w=800",
-      "https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&fit=crop&q=80&w=800"
-    ],
-    "description": "<h2>Améliorez l'écriture de vos enfants de manière ludique !</h2><p>Le Magic Pen est un système d'apprentissage révolutionnaire qui permet aux enfants de pratiquer l'écriture sans gaspiller de papier. L'encre disparaît magiquement après quelques minutes.</p><ul><li>Améliore la motricité fine</li><li>Réutilisable à l'infini</li><li>Livré avec des guides de posture</li></ul>",
-    "couleur": "",
-    "taille": "",
-    "showQuantity": "NO",
     "isLandingPage": "NO",
-    "remisePopup": "no, 10",
     "modeBlack": "NO",
-    "offres": [
-      {
-        "qty": 1,
-        "price": 17900,
-        "oldPrice": 24000,
-        "title": "1 Kit (4 Cahiers + Stylo)"
-      },
-      {
-        "qty": 2,
-        "price": 24900,
-        "oldPrice": 35000,
-        "title": "2 Kits (8 Cahiers + 2 Stylos)"
-      },
-      {
-        "qty": 3,
-        "price": 31000,
-        "oldPrice": 53000,
-        "title": "3 Kits (12 Cahiers + 3 Stylos)"
-      }
+    "description": "<h2>Améliorez l'écriture de vos enfants de manière ludique !</h2><p>Le Magic Pen est un système d'apprentissage révolutionnaire qui permet aux enfants de pratiquer l'écriture sans gaspiller de papier. L'encre disparaît magiquement après quelques minutes.</p><ul><li>Améliore la motricité fine</li><li>Réutilisable à l'infini</li><li>Livré avec des guides de posture</li></ul>",
+    "variation_color": [],
+    "variation_size": [],
+    "remisePopup": "no, 10",
+    "reviews": [],
+    "gallery": [
+      "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=800"
     ]
   },
   {

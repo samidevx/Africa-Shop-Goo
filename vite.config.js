@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
 
 export default defineConfig({
-  base: '/Africa-Shop-Goo/', // Updated repository name
+  base: '/', // Updated for custom domain bayongstore.me
   build: {
     outDir: 'dist',
   }

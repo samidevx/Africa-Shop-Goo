@@ -181,15 +181,15 @@ const renderProduct = (p) => {
             <div class="product-card">
                 ${!isLP ? `
                 <div class="prod-gallery">
-                    ${p.gallery && p.gallery.toLowerCase() === 'yes' ? `
+                    ${(Array.isArray(p.gallery) && p.gallery.length > 0) || (typeof p.gallery === 'string' && p.gallery.toLowerCase() === 'yes') ? `
                         <div id="interactive-gallery">
                             <div class="ig-main">
                                 <button class="ig-btn ig-prev" id="prev-ig"><i class="fa fa-chevron-left"></i></button>
-                                <img src="${p.images[0] || p.featuredImage}" id="ig-main-img">
+                                <img src="${(Array.isArray(p.gallery) ? p.gallery[0] : (p.images ? p.images[0] : p.featuredImage))}" id="ig-main-img">
                                 <button class="ig-btn ig-next" id="next-ig"><i class="fa fa-chevron-right"></i></button>
                             </div>
                             <div class="ig-thumbs" id="ig-thumbs">
-                                ${[p.featuredImage, ...(p.images || [])].map((img, i) => `
+                                ${[p.featuredImage, ...(Array.isArray(p.gallery) ? p.gallery : (p.images || []))].map((img, i) => `
                                     <div class="ig-thumb ${i === 0 ? 'active' : ''}" data-index="${i}"><img src="${img}"></div>
                                 `).join('')}
                             </div>

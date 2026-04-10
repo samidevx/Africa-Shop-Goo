@@ -576,8 +576,8 @@ const setupGlobalEvents = () => {
 
 const setupProductEvents = (p) => {
     // --- GALLERY ---
-    if (p.gallery === 'yes') {
-        const images = [p.featuredImage, ...(p.images || [])];
+    if ((Array.isArray(p.gallery) && p.gallery.length > 0) || p.gallery === 'yes') {
+        const images = [p.featuredImage, ...(Array.isArray(p.gallery) ? p.gallery : (p.images || []))];
         const mainImg = document.getElementById('ig-main-img');
         const thumbs = document.querySelectorAll('.ig-thumb');
 

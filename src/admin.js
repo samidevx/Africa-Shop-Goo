@@ -247,6 +247,15 @@ const admin = {
     async syncToGitHub(message) {
         const url = `https://api.github.com/repos/${this.config.repo}/contents/${this.config.path}`;
         
+        // 🔹 FORCE REFRESH THE SHA (Prevent "does not match" errors)
+        const checkRes = await fetch(url, {
+            headers: { 'Authorization': `Bearer ${this.config.token}` }
+        });
+        if (checkRes.ok) {
+            const checkData = await checkRes.json();
+            this.state.currentSha = checkData.sha;
+        }
+
         // Encode content to Base64 (handling UTF-8 correctly)
         const jsonStr = JSON.stringify(this.state.products, null, 2);
         const content = btoa(unescape(encodeURIComponent(jsonStr)));
@@ -266,7 +275,7 @@ const admin = {
 
         if (!res.ok) {
             const err = await res.json();
-            alert("Erreur de sauvegarde : " + err.message);
+            alert("❌ Erreur de sauvegarde : " + err.message + "\n\nAstuce: Réessayez dans 5 secondes.");
         } else {
             const data = await res.json();
             this.state.currentSha = data.content.sha; // Update SHA for next save

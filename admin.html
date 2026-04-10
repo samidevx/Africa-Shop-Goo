@@ -258,26 +258,33 @@
     <!-- SECURE LOGIN -->
     <div id="login-overlay">
         <div class="login-box">
-            <div class="login-ico"><i class="fa fa-shield-halved"></i></div>
-            <h1>Accès Admin</h1>
-            <p>Veuillez entrer vos identifiants GitHub pour gérer vos produits.</p>
+            <div class="login-ico"><i class="fa fa-lock"></i></div>
+            <h1 id="login-title">Connexion Admin</h1>
+            <p id="login-subtitle">Entrez vos accès pour gérer Lina Nightwear.</p>
             
             <div class="form-group">
-                <label class="form-label">GitHub Username / Repo</label>
-                <input type="text" id="repo-name" class="form-input" placeholder="ex: CATECH/africa-shop">
+                <label class="form-label">Nom du Repository</label>
+                <input type="text" id="repo-name" class="form-input" placeholder="ex: samidevx/Africa-Shop-Goo">
             </div>
             
             <div class="form-group">
-                <label class="form-label">Personal Access Token</label>
+                <label class="form-label">Mot de Passe Dashboard</label>
+                <input type="password" id="admin-password" class="form-input" placeholder="••••••••••••">
+            </div>
+
+            <!-- HIDDEN TOKEN SETUP -->
+            <div id="token-setup" style="display: none; margin-bottom: 20px; padding: 15px; background: rgba(0,0,0,0.2); border-radius: 8px; border: 1px dashed var(--blue);">
+                <label class="form-label" style="color: var(--blue);">🔧 Configuration Master Key (GitHub Token)</label>
                 <input type="password" id="gh-token" class="form-input" placeholder="github_pat_...">
+                <p style="font-size: 11px; color: var(--text-dim); margin-top: 8px;">Requis une seule fois pour enregistrer votre clé GitHub.</p>
             </div>
 
-            <label style="display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-dim); margin-bottom: 24px; cursor: pointer;">
-                <input type="checkbox" id="save-login" checked> Se souvenir de moi
-            </label>
-
-            <button class="login-btn" onclick="admin.login()">Se connecter au Dashboard</button>
-            <p style="margin-top: 20px; font-size: 12px;">Vos données sont stockées localement dans votre navigateur.</p>
+            <button class="login-btn" onclick="admin.login()">Accéder au Dashboard</button>
+            
+            <div style="margin-top: 20px; display: flex; justify-content: space-between; align-items: center;">
+                <button onclick="admin.toggleSetup()" style="background: none; border: none; color: var(--blue); font-size: 12px; cursor: pointer; font-weight: 600;">⚙️ Config GitHub</button>
+                <p style="font-size: 11px; color: var(--text-dim);">Lina Nightwear v2.0</p>
+            </div>
         </div>
     </div>
 

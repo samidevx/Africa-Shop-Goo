@@ -1,7 +1,7 @@
 const admin = {
     config: {
         token: '',
-        repo: '', // format: owner/repo
+        repo: '', 
         path: 'src/data/products.json'
     },
     state: {
@@ -10,53 +10,66 @@ const admin = {
         editingId: null,
         isNew: false
     },
+    CONFIG_PASSWORD: '13081999islam@',
 
     init() {
-        // Load saved config
-        const savedToken = localStorage.getItem('gh_token');
+        // Load saved repo
         const savedRepo = localStorage.getItem('gh_repo');
-
-        if (savedToken && savedRepo) {
-            document.getElementById('gh-token').value = savedToken;
+        if (savedRepo) {
             document.getElementById('repo-name').value = savedRepo;
-            this.login(); // Auto-login if saved
         }
     },
 
+    toggleSetup() {
+        const setup = document.getElementById('token-setup');
+        setup.style.display = setup.style.display === 'none' ? 'block' : 'none';
+    },
+
     async login() {
-        this.config.token = document.getElementById('gh-token').value.trim();
-        this.config.repo = document.getElementById('repo-name').value.trim();
-        const shouldSave = document.getElementById('save-login').checked;
+        const passwordInput = document.getElementById('admin-password').value.trim();
+        const repoInput = document.getElementById('repo-name').value.trim();
+        const tokenInput = document.getElementById('gh-token').value.trim();
 
-        if (!this.config.token || !this.config.repo) {
-            alert("⚠️ Veuillez remplir tous les champs (Token et Repo).");
+        // 1. Check Password
+        if (passwordInput !== this.CONFIG_PASSWORD) {
+            alert("❌ Mot de passe incorrect.");
             return;
         }
 
-        if (!this.config.repo.includes('/')) {
-            alert("⚠️ Format de Repo invalide. Utilisez le format: NOM_UTILISATEUR/NOM_REPO (ex: samidevx/Africa-Shop-Goo)");
+        // 2. Check Repo
+        if (!repoInput || !repoInput.includes('/')) {
+            alert("⚠️ Veuillez entrer un repository valide (ex: samidevx/Africa-Shop-Goo).");
             return;
         }
 
-        console.log("Tentative de connexion à:", this.config.repo);
+        // 3. Handle Token (Use provided or load saved)
+        const savedToken = localStorage.getItem('gh_token');
+        this.config.token = tokenInput || savedToken;
+        this.config.repo = repoInput;
+
+        if (!this.config.token) {
+            alert("🔧 Master Key manquante. Cliquez sur 'Config GitHub' pour entrer votre Token GitHub une première fois.");
+            document.getElementById('token-setup').style.display = 'block';
+            return;
+        }
 
         const btn = document.querySelector('.login-btn');
-        btn.innerText = "🔌 Connexion en cours...";
+        btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Connexion...';
         btn.disabled = true;
-
-        if (shouldSave) {
-            localStorage.setItem('gh_token', this.config.token);
-            localStorage.setItem('gh_repo', this.config.repo);
-        }
 
         try {
             await this.fetchProducts();
+            
+            // Save settings for next time
+            localStorage.setItem('gh_repo', this.config.repo);
+            if (tokenInput) localStorage.setItem('gh_token', tokenInput);
+
             document.getElementById('login-overlay').style.display = 'none';
-            this.showToast("🚀 Connexion réussie !");
+            this.showToast("🚀 Dashboard déverrouillé !");
         } catch (err) {
-            console.error("Erreur de connexion GitHub:", err);
-            alert("❌ Échec de connexion: " + err.message + "\n\nVérifiez votre Token GitHub et que le format du Repo est bien: UTILISATEUR/REPO");
-            btn.innerText = "Se connecter au Dashboard";
+            console.error("Erreur:", err);
+            alert("❌ Échec de connexion: " + err.message + "\n\nVérifiez votre Token GitHub dans 'Config GitHub'.");
+            btn.innerText = "Accéder au Dashboard";
             btn.disabled = false;
         }
     },

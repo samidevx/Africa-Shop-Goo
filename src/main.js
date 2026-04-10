@@ -749,6 +749,30 @@ const setupProductEvents = (p) => {
         document.getElementById('modal-remise').classList.remove('open');
         document.getElementById('orderFormBlock').scrollIntoView({ behavior: 'smooth' });
     };
+
+    // --- STICKY ACTIONS TRACKING ---
+    const stickyOrder = document.querySelector('.sticky-order');
+    if (stickyOrder) {
+        stickyOrder.onclick = () => {
+            firePixel('AddToCart', {
+                content_name: p.title,
+                content_ids: [p.id],
+                content_type: 'product',
+                value: p.price,
+                currency: 'XOF'
+            });
+        };
+    }
+
+    const stickyWa = document.querySelector('.sticky-wa');
+    if (stickyWa) {
+        stickyWa.onclick = () => {
+            firePixel('Contact', {
+                content_name: 'WhatsApp Support',
+                content_category: 'Customer Service'
+            });
+        };
+    }
 };
 
 // --- INIT ---

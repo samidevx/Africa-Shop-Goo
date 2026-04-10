@@ -40,6 +40,10 @@ const admin = {
 
         console.log("Tentative de connexion à:", this.config.repo);
 
+        const btn = document.querySelector('.login-btn');
+        btn.innerText = "🔌 Connexion en cours...";
+        btn.disabled = true;
+
         if (shouldSave) {
             localStorage.setItem('gh_token', this.config.token);
             localStorage.setItem('gh_repo', this.config.repo);
@@ -52,6 +56,8 @@ const admin = {
         } catch (err) {
             console.error("Erreur de connexion GitHub:", err);
             alert("❌ Échec de connexion. Vérifiez votre Token GitHub et que le nom du Repo est exact.");
+            btn.innerText = "Se connecter au Dashboard";
+            btn.disabled = false;
         }
     },
 
@@ -245,5 +251,6 @@ const admin = {
     }
 };
 
-// Initialize
+// Initialize and Expose to Global Scope for Vite compatibility
+window.admin = admin;
 window.onload = () => admin.init();

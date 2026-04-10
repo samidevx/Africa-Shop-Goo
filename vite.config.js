@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
 
 export default defineConfig({
-  base: '/Africa-Shop-Goo/', // Reverted to repo path
+  base: '/', // Updated for linanightwear.com
   build: {
     outDir: 'dist',
   }

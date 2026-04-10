@@ -15,8 +15,21 @@ const admin = {
     init() {
         // Load saved repo
         const savedRepo = localStorage.getItem('gh_repo');
+        const sessionActive = sessionStorage.getItem('admin_session') === 'true';
+
         if (savedRepo) {
             document.getElementById('repo-name').value = savedRepo;
+        }
+
+        // Auto-login if session is active and we have a token
+        if (sessionActive && localStorage.getItem('gh_token') && savedRepo) {
+            this.config.token = localStorage.getItem('gh_token');
+            this.config.repo = savedRepo;
+            this.fetchProducts().then(() => {
+                document.getElementById('login-overlay').style.display = 'none';
+            }).catch(() => {
+                sessionStorage.removeItem('admin_session');
+            });
         }
     },
 
@@ -63,6 +76,7 @@ const admin = {
             // Save settings for next time
             localStorage.setItem('gh_repo', this.config.repo);
             if (tokenInput) localStorage.setItem('gh_token', tokenInput);
+            sessionStorage.setItem('admin_session', 'true');
 
             document.getElementById('login-overlay').style.display = 'none';
             this.showToast("🚀 Dashboard déverrouillé !");

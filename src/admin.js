@@ -29,9 +29,16 @@ const admin = {
         const shouldSave = document.getElementById('save-login').checked;
 
         if (!this.config.token || !this.config.repo) {
-            alert("Veuillez remplir tous les champs de connexion.");
+            alert("⚠️ Veuillez remplir tous les champs (Token et Repo).");
             return;
         }
+
+        if (!this.config.repo.includes('/')) {
+            alert("⚠️ Format de Repo invalide. Utilisez le format: NOM_UTILISATEUR/NOM_REPO (ex: samidevx/Africa-Shop-Goo)");
+            return;
+        }
+
+        console.log("Tentative de connexion à:", this.config.repo);
 
         if (shouldSave) {
             localStorage.setItem('gh_token', this.config.token);
@@ -41,10 +48,10 @@ const admin = {
         try {
             await this.fetchProducts();
             document.getElementById('login-overlay').style.display = 'none';
-            this.showToast("Connexion réussie !");
+            this.showToast("🚀 Connexion réussie !");
         } catch (err) {
-            alert("Erreur de connexion : Vérifiez votre Token et le nom du Repo.");
-            console.error(err);
+            console.error("Erreur de connexion GitHub:", err);
+            alert("❌ Échec de connexion. Vérifiez votre Token GitHub et que le nom du Repo est exact.");
         }
     },
 

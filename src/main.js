@@ -651,6 +651,14 @@ const setupProductEvents = (p) => {
     const form = document.getElementById('orderForm');
     form.onsubmit = async (e) => {
         e.preventDefault();
+        
+        // Track the completion of the form
+        firePixel('InitiateCheckout', { 
+            value: state.price * state.quantity, 
+            currency: 'XOF',
+            content_name: p.title
+        });
+
         const ok = await new Promise(res => {
             const modal = document.getElementById('modal-confirm');
             modal.classList.add('open');
@@ -711,8 +719,7 @@ const setupProductEvents = (p) => {
             state.lastAbandonedStr = currentStr;
 
             if (!state.initiateCheckoutFired) {
-                firePixel('InitiateCheckout', { value: state.price * state.quantity, currency: 'XOF' });
-                state.initiateCheckoutFired = true;
+                // We'll fire this on submit now as requested
             }
 
             const formData = new FormData();

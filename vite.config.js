@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
 
 export default defineConfig({
-  base: '/store-/', // Replace with your repository name
+  base: '/Africa-Shop-Goo/', // Updated repository name
   build: {
     outDir: 'dist',
   }

@@ -22,7 +22,7 @@
     "couleur": "",
     "taille": "",
     "showQuantity": "NO",
-    "isLandingPage": "NO",
+    "isLandingPage": "yes",
     "modeBlack": "yes",
     "remisePopup": "no, 10"
   },

@@ -169,7 +169,7 @@ const renderHome = () => {
                     LP Africa
                 </a>
                 <div class="header-spacer" style="display:flex; justify-content:flex-end;">
-                    <button class="mode-toggle" id="dark-mode-toggle"><i class="fa fa-moon"></i><i class="fa fa-sun"></i></button>
+                    <button class="mode-toggle" id="dark-mode-toggle" aria-label="Changer le thème"><i class="fa fa-moon"></i><i class="fa fa-sun"></i></button>
                 </div>
             </div>
         </header>
@@ -248,7 +248,7 @@ const renderProduct = (p) => {
                     LP Africa
                 </a>
                 <div class="header-spacer" style="display:flex; justify-content:flex-end;">
-                    <button class="mode-toggle" id="dark-mode-toggle"><i class="fa fa-moon"></i><i class="fa fa-sun"></i></button>
+                    <button class="mode-toggle" id="dark-mode-toggle" aria-label="Changer le thème"><i class="fa fa-moon"></i><i class="fa fa-sun"></i></button>
                 </div>
             </div>
         </header>
@@ -263,9 +263,9 @@ const renderProduct = (p) => {
                     ${(Array.isArray(p.gallery) && p.gallery.length > 0) || (typeof p.gallery === 'string' && p.gallery.toLowerCase() === 'yes') ? `
                         <div id="interactive-gallery">
                             <div class="ig-main">
-                                <button class="ig-btn ig-prev" id="prev-ig"><i class="fa fa-chevron-left"></i></button>
-                                <img src="${(Array.isArray(p.gallery) ? p.gallery[0] : (p.images ? p.images[0] : p.featuredImage))}" id="ig-main-img">
-                                <button class="ig-btn ig-next" id="next-ig"><i class="fa fa-chevron-right"></i></button>
+                                <button class="ig-btn ig-prev" id="prev-ig" aria-label="Image précédente"><i class="fa fa-chevron-left"></i></button>
+                                <img src="${(Array.isArray(p.gallery) ? p.gallery[0] : (p.images ? p.images[0] : p.featuredImage))}" id="ig-main-img" alt="${p.title}">
+                                <button class="ig-btn ig-next" id="next-ig" aria-label="Image suivante"><i class="fa fa-chevron-right"></i></button>
                             </div>
                             <div class="ig-thumbs" id="ig-thumbs">
                                 ${[p.featuredImage, ...(Array.isArray(p.gallery) ? p.gallery : (p.images || []))].map((img, i) => `
@@ -312,7 +312,7 @@ const renderProduct = (p) => {
             <div class="order-col" id="orderFormBlock">
                 <div class="order-card">
                     <div class="order-hdr" style="background: #2563eb;">
-                        <h3><i class="fa fa-shopping-cart"></i> Passer ma commande</h3>
+                        <h2><i class="fa fa-shopping-cart"></i> Passer ma commande</h2>
                         <p>Remplissez le formulaire ci-dessous</p>
                     </div>
                     <div class="order-body">
@@ -353,25 +353,25 @@ const renderProduct = (p) => {
                         <form id="orderForm">
                             <div class="form-row">
                                 <div class="form-group">
-                                    <label class="form-label"><i class="fa fa-globe"></i> Pays <span class="req">*</span></label>
+                                    <label class="form-label" for="pays"><i class="fa fa-globe"></i> Pays <span class="req">*</span></label>
                                     <select class="form-control" id="pays" required>
                                         <option value="">Choisir le pays</option>
                                         ${p.pays.split(',').map(c => `<option value="${c}">${COUNTRY_MAP[c] || c}</option>`).join('')}
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-label"><i class="fa fa-mobile-screen"></i> Téléphone <span class="req">*</span></label>
+                                    <label class="form-label" for="tel"><i class="fa fa-mobile-screen"></i> Téléphone <span class="req">*</span></label>
                                     <input type="tel" class="form-control" id="tel" placeholder="XX XXX XX XX" required>
                                 </div>
                             </div>
 
                             <div class="form-row">
                                 <div class="form-group">
-                                    <label class="form-label"><i class="fa fa-user"></i> Nom <span class="req">*</span></label>
+                                    <label class="form-label" for="nom"><i class="fa fa-user"></i> Nom <span class="req">*</span></label>
                                     <input type="text" class="form-control" id="nom" placeholder="Votre nom complet" required>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-label"><i class="fa fa-map-marker-alt"></i> Ville <span class="req">*</span></label>
+                                    <label class="form-label" for="adr"><i class="fa fa-map-marker-alt"></i> Ville <span class="req">*</span></label>
                                     <input type="text" class="form-control" id="adr" placeholder="Ville, Quartier" required>
                                 </div>
                             </div>
@@ -386,7 +386,7 @@ const renderProduct = (p) => {
                             <div class="form-row">
                                 ${p.couleur ? `
                                     <div class="form-group">
-                                        <label class="form-label"><i class="fa fa-palette"></i> Couleur</label>
+                                        <label class="form-label" for="var-couleur"><i class="fa fa-palette"></i> Couleur</label>
                                         <select class="form-control" id="var-couleur">
                                             ${p.couleur.split(',').map(c => `<option value="${c}">${c}</option>`).join('')}
                                         </select>
@@ -395,7 +395,7 @@ const renderProduct = (p) => {
 
                                 ${p.taille ? `
                                     <div class="form-group">
-                                        <label class="form-label"><i class="fa fa-ruler-combined"></i> Taille</label>
+                                        <label class="form-label" for="var-taille"><i class="fa fa-ruler-combined"></i> Taille</label>
                                         <select class="form-control" id="var-taille">
                                             ${p.taille.split(',').map(s => `<option value="${s}">${s}</option>`).join('')}
                                         </select>
@@ -405,11 +405,11 @@ const renderProduct = (p) => {
 
                             ${p.showQuantity && p.showQuantity.toLowerCase() === 'yes' && p.bundle && p.bundle.toLowerCase() !== 'yes' ? `
                                 <div class="qty-action-wrap">
-                                    <label class="qty-action-lbl">Quantité</label>
+                                    <label class="qty-action-lbl" for="manual-qty">Quantité</label>
                                     <div class="qty-box">
-                                        <button type="button" class="qty-btn" id="btn-qty-minus">-</button>
+                                        <button type="button" class="qty-btn" id="btn-qty-minus" aria-label="Diminuer la quantité">-</button>
                                         <input type="number" class="qty-val" id="manual-qty" value="1" readonly>
-                                        <button type="button" class="qty-btn" id="btn-qty-plus">+</button>
+                                        <button type="button" class="qty-btn" id="btn-qty-plus" aria-label="Augmenter la quantité">+</button>
                                     </div>
                                 </div>
                             ` : ''}
@@ -446,12 +446,12 @@ const renderProduct = (p) => {
             </div>
 
             ${!isLP ? `<div class="prod-desc">
-                <div class="section-ttl"><i class="fa fa-file-lines"></i> Description</div>
+                <h2 class="section-ttl"><i class="fa fa-file-lines"></i> Description</h2>
                 <div id="d-desc-content">${p.description}</div>
             </div>` : ''}
 
             <div class="prod-reviews">
-                <div class="section-ttl"><i class="fa fa-star"></i> Avis Clients</div>
+                <h2 class="section-ttl"><i class="fa fa-star"></i> Avis Clients</h2>
                 <div class="reviews-grid">
                     <div class="review-card">
                         <div class="review-stars">★★★★★</div>

@@ -475,7 +475,7 @@ const renderProduct = (p) => {
         
         <div class="sticky-bar">
             <a class="sticky-order" href="#orderFormBlock"><i class="fa fa-bag-shopping"></i> Commander</a>
-            <a aria-label="WhatsApp" class="sticky-wa" href="https://wa.me/${p.whatsapp.replace(/\+/g, '')}" target="_blank"><i class="fab fa-whatsapp"></i></a>
+            <a aria-label="WhatsApp" class="sticky-wa" href="https://wa.me/${p.whatsapp.replace(/\+/g, '')}?text=${encodeURIComponent(`Bonjour, je souhaite commander : ${p.title}\nproduct link : https://linanightwear.com/product/${p.id}`)}" target="_blank"><i class="fab fa-whatsapp"></i></a>
         </div>
 
         <!-- Modals -->

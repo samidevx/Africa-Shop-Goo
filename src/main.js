@@ -462,27 +462,6 @@ const renderProduct = (p) => {
                 <div id="d-desc-content"><div class="desc-placeholder" style="height:200px;background:var(--gray-100);border-radius:12px;display:flex;align-items:center;justify-content:center;color:var(--gray-400)"><i class="fa fa-image" style="font-size:32px"></i></div></div>
             </div>` : ''}
 
-            <div class="prod-reviews">
-                <h2 class="section-ttl"><i class="fa fa-star"></i> Avis Clients</h2>
-                <div class="reviews-grid">
-                    <div class="review-card">
-                        <div class="review-stars">★★★★★</div>
-                        <p class="review-text">"Super produit ! Livraison rapide et le service client est top."</p>
-                        <div class="review-author">
-                            <div class="review-av">MD</div>
-                            <div><div class="review-name">Moussa D.</div><div class="review-loc">Abidjan</div></div>
-                        </div>
-                    </div>
-                    <div class="review-card">
-                        <div class="review-stars">★★★★★</div>
-                        <p class="review-text">"Conforme à la description. Je recommande vivement."</p>
-                        <div class="review-author">
-                            <div class="review-av">AK</div>
-                            <div><div class="review-name">Aminata K.</div><div class="review-loc">Dakar</div></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </main>
         
         <div class="sticky-bar">

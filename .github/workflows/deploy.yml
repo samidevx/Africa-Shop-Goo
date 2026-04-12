@@ -35,7 +35,19 @@ jobs:
         
       - name: Build
         run: npm run build
-        
+
+      - name: Generate static routes (eliminates SPA redirect)
+        run: |
+          PRODUCT_IDS=$(node -e "const p=require('./src/data/products.json'); console.log(p.map(x=>x.id).join(' '))")
+          for ID in $PRODUCT_IDS; do
+            mkdir -p dist/product/$ID
+            cp dist/index.html dist/product/$ID/index.html
+            echo "  Created: dist/product/$ID/index.html"
+          done
+          mkdir -p dist/merci
+          cp dist/index.html dist/merci/index.html
+          echo "  Created: dist/merci/index.html"
+          
       - name: Setup Pages
         uses: actions/configure-pages@v4
         

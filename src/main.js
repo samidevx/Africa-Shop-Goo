@@ -234,6 +234,18 @@ const renderProduct = (p) => {
     if (p.modeBlack && p.modeBlack.toLowerCase() === 'yes') document.body.classList.add('mode-nuit');
     else document.body.classList.remove('mode-nuit');
 
+    // --- LCP PRELOAD: inject <link rel="preload"> for featured image ASAP ---
+    const lcpImg = (Array.isArray(p.gallery) && p.gallery.length > 0) ? p.gallery[0] : p.featuredImage;
+    const existingPreload = document.getElementById('lcp-preload');
+    if (existingPreload) existingPreload.remove();
+    const preloadLink = document.createElement('link');
+    preloadLink.id = 'lcp-preload';
+    preloadLink.rel = 'preload';
+    preloadLink.as = 'image';
+    preloadLink.href = lcpImg;
+    preloadLink.setAttribute('fetchpriority', 'high');
+    document.head.appendChild(preloadLink);
+
     const app = document.getElementById('app');
     app.innerHTML = `
         <div class="topbar">
@@ -264,17 +276,17 @@ const renderProduct = (p) => {
                         <div id="interactive-gallery">
                             <div class="ig-main">
                                 <button class="ig-btn ig-prev" id="prev-ig" aria-label="Image précédente"><i class="fa fa-chevron-left"></i></button>
-                                <img src="${(Array.isArray(p.gallery) ? p.gallery[0] : (p.images ? p.images[0] : p.featuredImage))}" id="ig-main-img" alt="${p.title}">
+                                <img src="${(Array.isArray(p.gallery) ? p.gallery[0] : (p.images ? p.images[0] : p.featuredImage))}" id="ig-main-img" alt="${p.title}" fetchpriority="high" loading="eager">
                                 <button class="ig-btn ig-next" id="next-ig" aria-label="Image suivante"><i class="fa fa-chevron-right"></i></button>
                             </div>
                             <div class="ig-thumbs" id="ig-thumbs">
                                 ${[p.featuredImage, ...(Array.isArray(p.gallery) ? p.gallery : (p.images || []))].map((img, i) => `
-                                    <div class="ig-thumb ${i === 0 ? 'active' : ''}" data-index="${i}"><img src="${img}"></div>
+                                    <div class="ig-thumb ${i === 0 ? 'active' : ''}" data-index="${i}"><img src="${img}" loading="lazy"></div>
                                 `).join('')}
                             </div>
                         </div>
                     ` : `
-                        <img src="${p.featuredImage}" alt="${p.title}">
+                        <img src="${p.featuredImage}" alt="${p.title}" fetchpriority="high" loading="eager">
                     `}
                     <div class="prod-badges">
                         <span class="badge badge-sale">🔥 Offre Spéciale</span>

@@ -266,7 +266,7 @@ const renderProduct = (p) => {
         </header>
         <main class="product-page fade-in">
             ${isLP ? `<div class="prod-desc landing-mode-desc" style="margin-top:0; margin-bottom: 24px;">
-                <div id="d-desc-content"><div class="desc-placeholder" style="height:200px;background:var(--gray-100);border-radius:12px;display:flex;align-items:center;justify-content:center;color:var(--gray-400)"><i class="fa fa-image" style="font-size:32px"></i></div></div>
+                <div id="d-desc-content">${p.description.replace(/fetchpriority="high"/gi, 'loading="lazy"').replace(/<img(?!([^>]*loading=))/g, '<img loading="lazy" ')}</div>
             </div>` : ''}
 
             <div class="product-card">
@@ -503,20 +503,22 @@ const renderProduct = (p) => {
     setupProductEvents(p);
     setupGlobalEvents();
 
-    // Defer description HTML injection to avoid blocking LCP/TBT
-    const injectDesc = () => {
-        const descEl = document.getElementById('d-desc-content');
-        if (!descEl) return;
-        // Strip competing fetchpriority=high from description images & ensure lazy loading
-        const cleanDesc = p.description
-            .replace(/fetchpriority="high"/gi, 'loading="lazy"')
-            .replace(/<img(?!([^>]*loading=))/g, '<img loading="lazy" ');
-        descEl.innerHTML = cleanDesc;
-    };
-    if ('requestIdleCallback' in window) {
-        requestIdleCallback(injectDesc, { timeout: 3000 });
-    } else {
-        setTimeout(injectDesc, 300);
+    // Defer description HTML injection (only for non-LP mode; LP injects directly)
+    if (!isLP) {
+        const injectDesc = () => {
+            const descEl = document.getElementById('d-desc-content');
+            if (!descEl) return;
+            // Strip competing fetchpriority=high from description images & ensure lazy loading
+            const cleanDesc = p.description
+                .replace(/fetchpriority="high"/gi, 'loading="lazy"')
+                .replace(/<img(?!([^>]*loading=))/g, '<img loading="lazy" ');
+            descEl.innerHTML = cleanDesc;
+        };
+        if ('requestIdleCallback' in window) {
+            requestIdleCallback(injectDesc, { timeout: 3000 });
+        } else {
+            setTimeout(injectDesc, 300);
+        }
     }
 };
 

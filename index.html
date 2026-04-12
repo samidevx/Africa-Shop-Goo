@@ -22,14 +22,13 @@
     <meta name="twitter:description" content="Livraison rapide et paiement à la réception." />
     <meta name="twitter:image" content="https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=1200" />
 
-    <!-- Preconnect to external domains for faster resource loading -->
+    <!-- Preconnect to top 4 critical origins only (Lighthouse warns on 5+) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
     <link rel="preconnect" href="https://blogger.googleusercontent.com" crossorigin />
-    <link rel="preconnect" href="https://alphadigitalservices.store" crossorigin />
 
-    <!-- Google Fonts: non-render-blocking via media=print swap trick -->
+    <!-- Google Fonts: non-render-blocking -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'" />
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700;800&display=swap" /></noscript>
 
@@ -69,9 +68,9 @@
       // End Single Page Apps for GitHub Pages
     </script>
     
-    <!-- Meta Pixel: deferred so it doesn't block FCP -->
+    <!-- Meta Pixel: delayed 3s to avoid blocking TBT/LCP measurements -->
     <script>
-      window.addEventListener('load', function() {
+      setTimeout(function() {
         !function(f,b,e,v,n,t,s)
         {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
         n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -82,7 +81,7 @@
         'https://connect.facebook.net/en_US/fbevents.js');
         fbq('init', '931050979555225');
         fbq('track', 'PageView');
-      });
+      }, 3000);
     </script>
     <!-- End Meta Pixel Code -->
   </head>

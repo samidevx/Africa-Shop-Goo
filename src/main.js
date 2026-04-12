@@ -222,13 +222,13 @@ const renderProduct = (p) => {
     state.quantity = 1;
     state.igIndex = 0;
     const isLP = p.isLandingPage && p.isLandingPage.toLowerCase() === 'yes';
-    
+
     // LP Body Classes
     if (isLP) document.body.classList.add('lp-mode-active');
     else document.body.classList.remove('lp-mode-active');
 
     // Hide footer if LP
-    if (isLP) document.body.classList.add('is-merci-page'); 
+    if (isLP) document.body.classList.add('is-merci-page');
     else document.body.classList.remove('is-merci-page');
 
     if (p.modeBlack && p.modeBlack.toLowerCase() === 'yes') document.body.classList.add('mode-nuit');
@@ -474,7 +474,7 @@ const renderProduct = (p) => {
         </main>
         
         <div class="sticky-bar">
-            <a class="sticky-order" href="#orderForm"><i class="fa fa-bag-shopping"></i> Commander</a>
+            <a class="sticky-order" href="#orderFormBlock"><i class="fa fa-bag-shopping"></i> Commander</a>
             <a aria-label="WhatsApp" class="sticky-wa" href="https://wa.me/${p.whatsapp.replace(/\+/g, '')}?text=${encodeURIComponent(`Bonjour, je souhaite commander : ${p.title}\nproduct link : https://linanightwear.com/product/${p.id}`)}" target="_blank"><i class="fab fa-whatsapp"></i></a>
         </div>
 
@@ -651,11 +651,11 @@ const setupProductEvents = (p) => {
     const form = document.getElementById('orderForm');
     form.onsubmit = async (e) => {
         e.preventDefault();
-        
+
         // Track the completion of the form
-        firePixel('InitiateCheckout', { 
-            value: state.price * state.quantity, 
-            currency: 'XOF',
+        firePixel('InitiateCheckout', {
+            value: state.price * state.quantity,
+            currency: p.currency === 'CFA' ? 'XOF' : p.currency,
             content_name: p.title
         });
 
@@ -682,6 +682,8 @@ const setupProductEvents = (p) => {
         formData.append("quantity", state.quantity);
         formData.append("platform", "GitHubPages");
         formData.append("order_id", state.cartSessionId);
+        formData.append("code", p.code || "");
+        formData.append("status", "COMPLETED");
 
         const vCouleur = document.getElementById('var-couleur');
         const vTaille = document.getElementById('var-taille');
@@ -693,7 +695,14 @@ const setupProductEvents = (p) => {
 
         try {
             await fetch(GOOGLE_SHEETS_WEBAPP_URL, { method: "POST", body: formData, mode: "no-cors" });
-            firePixel('Purchase', { value: state.price * state.quantity, currency: 'XOF', content_name: p.title });
+            firePixel('Purchase', {
+                value: state.price * state.quantity,
+                currency: p.currency === 'CFA' ? 'XOF' : p.currency,
+                content_name: p.title,
+                content_ids: [p.code || window.location.pathname],
+                content_type: 'product',
+                num_items: state.quantity
+            });
             sessionStorage.setItem('last_order', JSON.stringify({
                 customer_name: document.getElementById('nom').value,
                 product_name: p.title,
@@ -711,26 +720,47 @@ const setupProductEvents = (p) => {
     // --- ABANDONED CHECKOUT ---
     const logAbandoned = () => {
         if (state.isSubmitting) return;
-        const tel = document.getElementById('tel').value;
-        const nom = document.getElementById('nom').value;
-        if (tel.length >= 8 && nom.length > 2) {
-            const currentStr = tel + nom;
+        const form = document.getElementById('orderForm');
+        if (!form) return;
+
+        const requireds = Array.from(form.querySelectorAll('[required]'));
+        const allValid = requireds.every(el => {
+            if (el.type === 'checkbox') return el.checked;
+            return el.value && el.value.trim().length >= (el.type === 'tel' ? 8 : 2);
+        });
+
+        if (allValid) {
+            const tel = document.getElementById('tel').value;
+            const nom = document.getElementById('nom').value;
+            const adr = document.getElementById('adr').value;
+            const pays = document.getElementById('pays').value;
+
+            const currentStr = tel + nom + adr + pays;
             if (currentStr === state.lastAbandonedStr) return;
             state.lastAbandonedStr = currentStr;
-
-            if (!state.initiateCheckoutFired) {
-                // We'll fire this on submit now as requested
-            }
 
             const formData = new FormData();
             formData.append("nom", nom);
             formData.append("telephone", tel);
+            formData.append("pays", pays);
+            formData.append("adresse", adr);
             formData.append("produit", p.title);
+            formData.append("prix", (state.price * state.quantity) + " " + p.currency);
+            formData.append("quantity", state.quantity);
             formData.append("status", "ABANDONED");
+            formData.append("code", p.code || "");
+            formData.append("order_id", state.cartSessionId);
             fetch(GOOGLE_SHEETS_WEBAPP_URL, { method: "POST", body: formData, mode: "no-cors" });
         }
     };
-    ['nom', 'tel', 'adr'].forEach(id => document.getElementById(id).onblur = logAbandoned);
+
+    const formEl = document.getElementById('orderForm');
+    if (formEl) {
+        formEl.querySelectorAll('input, select').forEach(el => {
+            el.onblur = logAbandoned;
+            el.onchange = logAbandoned;
+        });
+    }
 
     // --- EXIT INTENT ---
     let remiseShown = false;
@@ -750,7 +780,7 @@ const setupProductEvents = (p) => {
     };
     document.addEventListener('mouseleave', (e) => { if (e.clientY < 50) showRemise(); });
     document.getElementById('btn-apply-remise').onclick = () => {
-        state.price = Math.round(state.price * (1 - remisePercent/100));
+        state.price = Math.round(state.price * (1 - remisePercent / 100));
         updateOrderSummary();
         document.getElementById('d-price').innerText = fmtPrice(state.price) + ' ' + p.currency;
         document.getElementById('modal-remise').classList.remove('open');
@@ -766,7 +796,7 @@ const setupProductEvents = (p) => {
                 content_ids: [p.id],
                 content_type: 'product',
                 value: p.price,
-                currency: 'XOF'
+                currency: p.currency === 'CFA' ? 'XOF' : p.currency
             });
         };
     }
@@ -791,6 +821,18 @@ window.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('click', (e) => {
         const link = e.target.closest('a');
         if (link && link.href.startsWith(window.location.origin) && !link.target) {
+            // Internal anchor links handler
+            if (link.hash && link.pathname === window.location.pathname) {
+                const targetId = link.hash.substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    e.preventDefault();
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                    window.history.pushState(null, null, link.hash);
+                    return;
+                }
+            }
+
             e.preventDefault();
             navigate(link.pathname);
         }

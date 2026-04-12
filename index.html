@@ -22,6 +22,24 @@
     <meta property="twitter:description" content="Livraison rapide et paiement à la réception." />
     <meta property="twitter:image" content="https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=1200" />
     
+    <!-- UTM Capture: Must run BEFORE SPA redirect to avoid losing params -->
+    <script type="text/javascript">
+      (function() {
+        try {
+          var search = window.location.search;
+          // Also handle the GitHub Pages SPA format where URL starts with /?/path&utm_...
+          if (!search && window.location.href.indexOf('/?/') !== -1) {
+            var raw = window.location.href.split('/?/')[1] || '';
+            var qIdx = raw.indexOf('&');
+            if (qIdx !== -1) search = '?' + raw.substring(qIdx + 1);
+          }
+          var params = new URLSearchParams(search);
+          var utms = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'];
+          utms.forEach(function(k) { if (params.get(k)) sessionStorage.setItem(k, params.get(k)); });
+        } catch(e) {}
+      })();
+    </script>
+
     <script type="text/javascript">
       // Start Single Page Apps for GitHub Pages
       (function(l) {

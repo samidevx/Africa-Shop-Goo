@@ -300,23 +300,28 @@ const renderProduct = (p) => {
                         <span class="rating-count">(${p.reviews} avis)</span>
                         <span class="rating-badge"><i class="fa fa-circle-check"></i> Vendeur Vérifié</span>
                     </div>
-                    <div class="price-row">
-                        <span class="price-now" id="d-price">${fmtPrice(p.price)} ${p.currency}</span>
-                        ${p.priceOld ? `<span class="price-old" id="d-price-old">${fmtPrice(p.priceOld)} ${p.currency}</span>` : ''}
-                        ${p.priceOld ? `<span class="price-save" id="d-price-save">-${Math.round((p.priceOld - p.price) / p.priceOld * 100)}%</span>` : ''}
+                    <div class="price-row" style="margin-bottom: 10px; align-items: center;">
+                        <span class="price-now" id="d-price" style="font-size: 42px; color: var(--red);">${fmtPrice(p.price)} ${p.currency}</span>
+                        ${p.priceOld ? `<span class="price-old" id="d-price-old" style="font-size: 21px; color: var(--gray-500);">${fmtPrice(p.priceOld)} ${p.currency}</span>` : ''}
+                        ${p.priceOld ? `<span class="price-save" id="d-price-save" style="font-size: 13.5px; padding: 5px 12px; background: #fef08a; color: #92400e;">Économisez ${fmtPrice(p.priceOld - p.price)} ${p.currency} (-${Math.round((p.priceOld - p.price) / p.priceOld * 100)}%)</span>` : ''}
                     </div>
-                    <p class="price-note">Paiement à la livraison · Livraison gratuite</p>
+                    <p class="price-note" style="margin-bottom: 28px; font-size: 14.5px; color: var(--gray-500);"><span style="font-size: 15px;">💰</span> Paiement à la livraison — Zéro risque</p>
                     
-                    <div class="stock-wrap">
-                        <div class="stock-lbl"><span>Stock Disponible</span> <strong id="d-stock-lbl">Plus que ${p.stock} unités !</strong></div>
-                        <div class="stock-track"><div class="stock-fill" style="width: 75%"></div></div>
+                    <div class="stock-wrap" style="margin-bottom: 28px;">
+                        <div class="stock-lbl" style="font-size: 15px; font-weight: 700; color: var(--gray-800); margin-bottom: 10px;">
+                            <span>Stock disponible</span> 
+                            <strong id="d-stock-lbl" style="color: var(--red);">⚠️ Plus que ${p.stock} unités !</strong>
+                        </div>
+                        <div class="stock-track" style="height: 10px; background: var(--gray-200); border-radius: 10px;">
+                            <div class="stock-fill" style="width: 90%; height: 100%; border-radius: 10px; background: var(--orange); background: linear-gradient(90deg, var(--orange), #f97316); animation: none;"></div>
+                        </div>
                     </div>
 
-                    <ul class="feat-list">
-                        <li class="feat-item"><i class="fa fa-check"></i> Livraison gratuite partout</li>
-                        <li class="feat-item"><i class="fa fa-check"></i> Paiement uniquement à la réception</li>
-                        <li class="feat-item"><i class="fa fa-check"></i> Retour gratuit sous 7 jours</li>
-                        <li class="feat-item"><i class="fa fa-check"></i> Service client 7j/7</li>
+                    <ul class="feat-list" style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 24px;">
+                        <li class="feat-item" style="font-size: 15.5px; color: var(--gray-700); align-items: center;"><i class="fa fa-check-circle" style="color: var(--green); font-size: 19px; border-radius: 50%; fill: currentColor;"></i> Livraison gratuite partout</li>
+                        <li class="feat-item" style="font-size: 15.5px; color: var(--gray-700); align-items: center;"><i class="fa fa-check-circle" style="color: var(--green); font-size: 19px; border-radius: 50%; fill: currentColor;"></i> Paiement uniquement à la réception</li>
+                        <li class="feat-item" style="font-size: 15.5px; color: var(--gray-700); align-items: center;"><i class="fa fa-check-circle" style="color: var(--green); font-size: 19px; border-radius: 50%; fill: currentColor;"></i> Retour gratuit sous 7 jours</li>
+                        <li class="feat-item" style="font-size: 15.5px; color: var(--gray-700); align-items: center;"><i class="fa fa-check-circle" style="color: var(--green); font-size: 19px; border-radius: 50%; fill: currentColor;"></i> Service client 7j/7</li>
                     </ul>
                 </div>
             </div>
@@ -324,8 +329,10 @@ const renderProduct = (p) => {
             <div class="order-col" id="orderFormBlock">
                 <div class="order-card">
                     <div class="order-hdr" style="background: #2563eb;">
-                        <h2><i class="fa fa-shopping-cart"></i> Passer ma commande</h2>
-                        <p>Remplissez le formulaire ci-dessous</p>
+                        <h2 style="font-family: var(--fh); font-size: 20px; font-weight: 800; display: flex; align-items: center; gap: 8px; margin: 0; color: #fff;">
+                            <i class="fa fa-shopping-cart"></i> Passer ma commande
+                        </h2>
+                        <p style="font-size: 13px; opacity: 0.9; margin-top: 5px;">Remplissez le formulaire ci-dessous</p>
                     </div>
                     <div class="order-body">
                         <div id="countdown-container" style="${p.countdown && p.countdown.toLowerCase() === 'yes' ? '' : 'display:none'}">
@@ -357,41 +364,41 @@ const renderProduct = (p) => {
                             </div>
                         ` : ''}
 
-                        <div class="commit-msg" style="text-align: left; justify-content: flex-start; gap: 12px; margin-bottom: 24px; font-size: 13px;">
-                            <i class="fa fa-phone" style="transform: rotate(90deg); color: #2563eb;"></i>
-                            <span>Un agent vous appellera pour confirmer votre commande avant expédition. Merci de commander uniquement si vous êtes sûr de votre achat.</span>
+                        <div class="commit-msg" style="text-align: center; gap: 12px; margin-bottom: 24px; font-size: 13px; display: flex; align-items: center; justify-content: center; padding: 0 10px;">
+                            <i class="fa fa-phone" style="color: var(--blue); transform: rotate(90deg); font-size: 18px;"></i>
+                            <span style="color: var(--gray-500); line-height: 1.6;">Un agent vous appellera pour confirmer votre commande avant expédition. Merci de commander uniquement si vous êtes sûr de votre achat.</span>
                         </div>
 
                         <form id="orderForm">
                             <div class="form-row">
                                 <div class="form-group">
-                                    <label class="form-label" for="pays"><i class="fa fa-globe"></i> Pays <span class="req">*</span></label>
+                                    <label class="form-label" for="pays">🌍 Pays <span class="req">*</span></label>
                                     <select class="form-control" id="pays" required>
                                         <option value="">Choisir le pays</option>
                                         ${p.pays.split(',').map(c => `<option value="${c}">${COUNTRY_MAP[c] || c}</option>`).join('')}
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-label" for="tel"><i class="fa fa-mobile-screen"></i> Téléphone <span class="req">*</span></label>
+                                    <label class="form-label" for="tel">📱 Téléphone <span class="req">*</span></label>
                                     <input type="tel" class="form-control" id="tel" placeholder="XX XXX XX XX" required>
                                 </div>
                             </div>
 
                             <div class="form-row">
                                 <div class="form-group">
-                                    <label class="form-label" for="nom"><i class="fa fa-user"></i> Nom <span class="req">*</span></label>
+                                    <label class="form-label" for="nom">👤 Nom <span class="req">*</span></label>
                                     <input type="text" class="form-control" id="nom" placeholder="Votre nom complet" required>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-label" for="adr"><i class="fa fa-map-marker-alt"></i> Ville <span class="req">*</span></label>
+                                    <label class="form-label" for="adr">📍 Ville <span class="req">*</span></label>
                                     <input type="text" class="form-control" id="adr" placeholder="Ville, Quartier" required>
                                 </div>
                             </div>
 
-                            <div class="confirm-box" style="background: #fffbeb; border: 1.5px solid #fcd34d; padding: 12px; margin-bottom: 24px; border-radius: 8px;">
-                                <label style="display: flex; gap: 10px; align-items: center; cursor: pointer; color: #92400e; font-size: 13.5px; font-weight: 500;">
-                                    <input type="checkbox" checked required style="width: 18px; height: 18px; accent-color: #2563eb;">
-                                    Je confirme que je suis prêt(e) à recevoir l'appel pour confirmer ma commande
+                            <div class="confirm-box">
+                                <label>
+                                    <input type="checkbox" checked required style="width: 18px; height: 18px; accent-color: var(--blue); margin: 0; flex-shrink: 0; border-radius: 4px;">
+                                    <span>Je confirme que je suis prêt(e) à recevoir l'appel pour confirmer ma commande</span>
                                 </label>
                             </div>
 
@@ -429,7 +436,7 @@ const renderProduct = (p) => {
                             <div class="order-summary">
                                 <div class="sum-row"><span>Prix du produit</span> <span>${fmtPrice(state.price)} ${p.currency}</span></div>
                                 <div class="sum-row"><span>Quantité</span> <span id="sum-qty">${state.quantity}</span></div>
-                                <div class="sum-row"><span>Prix de livraison</span> <span style="color: #ca8a04;">Gratuit</span></div>
+                                <div class="sum-row"><span>Prix de livraison</span> <span>Gratuit</span></div>
                                 <div class="sum-total">
                                     <span>Total général</span>
                                     <span id="sum-total">${fmtPrice(state.price)} ${state.currency}</span>

@@ -676,6 +676,7 @@ const renderProductForm = (p = null) => {
         </div>
         <div class="admin-table-card" style="padding:32px;">
             <form id="productForm">
+                <h3 style="margin-bottom:20px; font-family:var(--fh);">Core Information</h3>
                 <div class="admin-form-grid">
                     <div class="form-group">
                         <label class="form-label">ID (slug)</label>
@@ -690,20 +691,112 @@ const renderProductForm = (p = null) => {
                         <input type="number" class="form-control" id="p-price" value="${p?.price || ''}" required>
                     </div>
                     <div class="form-group">
-                        <label class="form-label">Old Price (Optional)</label>
+                        <label class="form-label">Old Price</label>
                         <input type="number" class="form-control" id="p-priceOld" value="${p?.priceOld || ''}">
                     </div>
                     <div class="form-group">
-                        <label class="form-label">Stock</label>
-                        <input type="number" class="form-control" id="p-stock" value="${p?.stock || '100'}" required>
+                        <label class="form-label">Currency</label>
+                        <input type="text" class="form-control" id="p-currency" value="${p?.currency || 'CFA'}">
                     </div>
                     <div class="form-group">
-                        <label class="form-label">Featured Image URL</label>
-                        <input type="text" class="form-control" id="p-img" value="${p?.featuredImage || ''}" required>
+                        <label class="form-label">Category</label>
+                        <input type="text" class="form-control" id="p-category" value="${p?.category || 'Mode'}">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Stock</label>
+                        <input type="number" class="form-control" id="p-stock" value="${p?.stock || '25'}">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Product Code (SKU)</label>
+                        <input type="text" class="form-control" id="p-code" value="${p?.code || ''}">
                     </div>
                 </div>
-                <div class="form-group" style="margin-top:20px;">
-                    <label class="form-label">Description (HTML supported)</label>
+
+                <h3 style="margin-top:40px; margin-bottom:20px; font-family:var(--fh);">Logistics & Marketing</h3>
+                <div class="admin-form-grid">
+                    <div class="form-group">
+                        <label class="form-label">WhatsApp Number</label>
+                        <input type="text" class="form-control" id="p-whatsapp" value="${p?.whatsapp || '2250701825463'}">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Target Countries (ISO, comma-separated)</label>
+                        <input type="text" class="form-control" id="p-pays" value="${p?.pays || 'CI,SN,BF,TG,BJ,ML,GA,CM,NE,CG,CD,GN,TD'}">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Bundle Offer?</label>
+                        <select class="form-control" id="p-bundle">
+                            <option value="no" ${p?.bundle === 'no' ? 'selected' : ''}>No</option>
+                            <option value="yes" ${p?.bundle === 'yes' ? 'selected' : ''}>Yes</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Show Countdown?</label>
+                        <select class="form-control" id="p-countdown">
+                            <option value="NO" ${p?.countdown === 'NO' ? 'selected' : ''}>No</option>
+                            <option value="yes" ${p?.countdown === 'yes' ? 'selected' : ''}>Yes</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Animated CTA?</label>
+                        <select class="form-control" id="p-animated">
+                            <option value="no" ${p?.animated === 'no' ? 'selected' : ''}>No</option>
+                            <option value="yes" ${p?.animated === 'yes' ? 'selected' : ''}>Yes</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Landing Page Mode?</label>
+                        <select class="form-control" id="p-isLandingPage">
+                            <option value="no" ${p?.isLandingPage === 'no' ? 'selected' : ''}>No</option>
+                            <option value="yes" ${p?.isLandingPage === 'yes' ? 'selected' : ''}>Yes</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Dark Mode?</label>
+                        <select class="form-control" id="p-modeBlack">
+                            <option value="no" ${p?.modeBlack === 'no' ? 'selected' : ''}>No</option>
+                            <option value="yes" ${p?.modeBlack === 'yes' ? 'selected' : ''}>Yes</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Show Quantity Picker?</label>
+                        <select class="form-control" id="p-showQuantity">
+                            <option value="NO" ${p?.showQuantity === 'NO' ? 'selected' : ''}>No</option>
+                            <option value="yes" ${p?.showQuantity === 'yes' ? 'selected' : ''}>Yes</option>
+                        </select>
+                    </div>
+                </div>
+
+                <h3 style="margin-top:40px; margin-bottom:20px; font-family:var(--fh);">Variants & Popups</h3>
+                <div class="admin-form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Colors (comma-separated)</label>
+                        <input type="text" class="form-control" id="p-couleur" value="${p?.couleur || ''}" placeholder="Bleu, Noir, Rouge">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Sizes (comma-separated)</label>
+                        <input type="text" class="form-control" id="p-taille" value="${p?.taille || ''}" placeholder="S, M, L, XL">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Exit Intent Popup (enabled, percent)</label>
+                        <input type="text" class="form-control" id="p-remisePopup" value="${p?.remisePopup || 'no, 10'}" placeholder="yes, 15">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Reviews Count</label>
+                        <input type="text" class="form-control" id="p-reviews" value="${p?.reviews || '0'}">
+                    </div>
+                </div>
+
+                <h3 style="margin-top:40px; margin-bottom:20px; font-family:var(--fh);">Images & Description</h3>
+                <div class="form-group">
+                    <label class="form-label">Featured Image URL</label>
+                    <input type="text" class="form-control" id="p-img" value="${p?.featuredImage || ''}" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Gallery URLs (one per line)</label>
+                    <textarea class="form-control" id="p-gallery" style="height:120px;" placeholder="URL 1&#10;URL 2">${(p?.gallery || []).join('\n')}</textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Description (HTML)</label>
                     <textarea class="form-control" id="p-desc" style="height:200px;">${p?.description || ''}</textarea>
                 </div>
                 <div style="margin-top:32px; display:flex; gap:12px; justify-content:flex-end;">
@@ -849,14 +942,25 @@ const setupAdminEvents = () => {
                 title: document.getElementById('p-title').value,
                 price: parseInt(document.getElementById('p-price').value),
                 priceOld: parseInt(document.getElementById('p-priceOld').value) || null,
+                currency: document.getElementById('p-currency').value,
+                category: document.getElementById('p-category').value,
                 stock: document.getElementById('p-stock').value,
+                code: document.getElementById('p-code').value,
+                whatsapp: document.getElementById('p-whatsapp').value,
+                pays: document.getElementById('p-pays').value,
+                bundle: document.getElementById('p-bundle').value,
+                countdown: document.getElementById('p-countdown').value,
+                animated: document.getElementById('p-animated').value,
+                isLandingPage: document.getElementById('p-isLandingPage').value,
+                modeBlack: document.getElementById('p-modeBlack').value,
+                showQuantity: document.getElementById('p-showQuantity').value,
+                couleur: document.getElementById('p-couleur').value,
+                taille: document.getElementById('p-taille').value,
+                remisePopup: document.getElementById('p-remisePopup').value,
+                reviews: document.getElementById('p-reviews').value,
                 featuredImage: document.getElementById('p-img').value,
-                description: document.getElementById('p-desc').value,
-                currency: 'CFA', // Default
-                category: 'Uncategorized',
-                whatsapp: '2250701825463', // Default
-                pays: 'CI,SN,BF,TG,BJ,ML,GA,CM,NE,CG,CD,GN,TD',
-                reviews: '0'
+                gallery: document.getElementById('p-gallery').value.split('\n').map(s => s.trim()).filter(s => s.length > 0),
+                description: document.getElementById('p-desc').value
             };
             adminUtils.upsertProduct(formData);
             navigate('/admin/products');

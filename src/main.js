@@ -1,5 +1,6 @@
 import './style.css';
 import productsData from './data/products.json';
+import { adminUtils } from './admin_utils.js';
 
 // --- CONFIG ---
 const GOOGLE_SHEETS_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxa8D0w65CcXso3TaKuugijiwLk826xSJVQ4Ay5lS-9CzH3r06Wc6t-Bw8D_TOMNLAjIA/exec";
@@ -19,7 +20,8 @@ let state = {
     isSubmitting: false,
     initiateCheckoutFired: false,
     lastAbandonedStr: "",
-    igIndex: 0
+    igIndex: 0,
+    isAdmin: localStorage.getItem('admin_auth') === 'true'
 };
 
 // --- UTILS ---
@@ -129,6 +131,20 @@ const router = () => {
     const app = document.getElementById('app');
     app.className = ''; // Reset classes
 
+    // --- ADMIN ROUTES ---
+    if (path.startsWith('/admin')) {
+        if (path === '/admin/login') {
+            renderAdminLogin();
+            return;
+        }
+        if (!state.isAdmin) {
+            navigate('/admin/login');
+            return;
+        }
+        renderAdmin();
+        return;
+    }
+
     // Handle base paths if deployed in a subdirectory (common for GitHub Pages)
     const segments = path.split('/').filter(s => s.length > 0);
 
@@ -139,7 +155,8 @@ const router = () => {
         updateSEO();
     } else if (path.includes('/product/')) {
         const id = path.split('/product/').pop().replace(/\//g, '');
-        const product = productsData.find(p => p.id === id);
+        const products = adminUtils.getProducts();
+        const product = products.find(p => p.id === id);
         if (product) {
             renderProduct(product);
             updateSEO(product);
@@ -156,6 +173,7 @@ const router = () => {
 // --- VIEWS ---
 const renderHome = () => {
     const app = document.getElementById('app');
+    const products = adminUtils.getProducts();
     app.innerHTML = `
         <div class="topbar">
             <span><i class="fa fa-truck"></i> Livraison Gratuite</span>
@@ -195,7 +213,7 @@ const renderHome = () => {
                 <p>Livraison gratuite · Paiement à la livraison</p>
             </div>
             <div class="catalogue-grid">
-                ${productsData.map(p => `
+                ${products.map(p => `
                     <a class="pcard ${p.modeBlack === 'yes' ? 'mode-nuit' : ''}" href="/product/${p.id}">
                         <div class="pcard-img">
                             <img src="${p.featuredImage}" alt="${p.title}" loading="lazy">
@@ -560,24 +578,226 @@ const renderFooter = () => `
             </div>
             <div class="footer-col">
                 <h2>Liens</h2>
-                <ul>
-                    <li><a href="/">Accueil</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h2>Contact</h2>
-                <ul>
-                    <li><a href="https://wa.me/2250701825463" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a></li>
-                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-btm">
-            <span>© ${new Date().getFullYear()} LP Africa</span>
-            <span>🔒 Paiement sécurisé à la livraison</span>
-        </div>
-    </footer>
 `;
+
+// --- ADMIN VIEWS ---
+const renderAdminLogin = () => {
+    const app = document.getElementById('app');
+    app.innerHTML = `
+        <div class="login-screen">
+            <div class="login-card fade-in">
+                <h1 style="font-family:var(--fh); text-align:center; margin-bottom:24px;">Admin Login</h1>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <input type="password" class="form-control" id="adminPass" required placeholder="Enter password">
+                    </div>
+                    <button type="submit" class="btn-primary" style="width:100%; justify-content:center; padding:14px;">Login</button>
+                    <div id="loginError" style="color:var(--red); font-size:13px; text-align:center; margin-top:12px; display:none;">Invalid password</div>
+                </form>
+            </div>
+        </div>
+    `;
+    document.getElementById('loginForm').onsubmit = (e) => {
+        e.preventDefault();
+        const pass = document.getElementById('adminPass').value;
+        if (pass === 'admin123') { // Default password
+            localStorage.setItem('admin_auth', 'true');
+            state.isAdmin = true;
+            navigate('/admin');
+        } else {
+            document.getElementById('loginError').style.display = 'block';
+        }
+    };
+};
+
+const renderAdmin = () => {
+    const app = document.getElementById('app');
+    const path = window.location.pathname;
+    
+    app.innerHTML = `
+        <div class="admin-layout">
+            <aside class="admin-sidebar">
+                <div class="admin-logo">🛒 Admin Panel</div>
+                <nav class="admin-nav">
+                    <a href="/admin" class="admin-nav-item ${path === '/admin' ? 'active' : ''}"><i class="fa fa-chart-line"></i> Analytics</a>
+                    <a href="/admin/products" class="admin-nav-item ${path === '/admin/products' ? 'active' : ''}"><i class="fa fa-box"></i> Products</a>
+                    <a href="/admin/orders" class="admin-nav-item ${path === '/admin/orders' ? 'active' : ''}"><i class="fa fa-shopping-bag"></i> Orders</a>
+                    <div style="flex:1"></div>
+                    <a href="/" class="admin-nav-item"><i class="fa fa-globe"></i> View Site</a>
+                    <button id="logoutBtn" class="admin-nav-item" style="background:transparent; border:none; width:100%; cursor:pointer;"><i class="fa fa-sign-out"></i> Logout</button>
+                </nav>
+            </aside>
+            <main class="admin-content" id="adminMain">
+                ${renderAdminSubView()}
+            </main>
+        </div>
+    `;
+
+    document.getElementById('logoutBtn').onclick = () => {
+        localStorage.removeItem('admin_auth');
+        state.isAdmin = false;
+        navigate('/');
+    };
+
+    // Intercept clicks on admin nav
+    app.querySelectorAll('.admin-nav-item').forEach(link => {
+        if (link.tagName === 'A' && link.getAttribute('href').startsWith('/admin')) {
+            link.onclick = (e) => {
+                e.preventDefault();
+                navigate(link.getAttribute('href'));
+            };
+        }
+    });
+
+    setupAdminEvents();
+};
+
+const renderAdminSubView = () => {
+    const path = window.location.pathname;
+    if (path === '/admin/products') return renderAdminProducts();
+    if (path === '/admin/orders') return renderAdminOrders();
+    return renderAdminAnalytics();
+};
+
+const renderAdminAnalytics = () => {
+    const orders = JSON.parse(sessionStorage.getItem('captured_orders') || '[]');
+    const totalRev = orders.reduce((acc, o) => acc + (o.total || 0), 0);
+    
+    return `
+        <div class="admin-header">
+            <h1>Analytics Overview</h1>
+            <div class="btn-ghost"><i class="fa fa-calendar"></i> Last 30 Days</div>
+        </div>
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-lbl">Total Revenue</div>
+                <div class="kpi-val">${totalRev.toLocaleString()} CFA</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-lbl">Total Orders</div>
+                <div class="kpi-val">${orders.length}</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-lbl">Conversion Rate</div>
+                <div class="kpi-val">3.2%</div>
+            </div>
+        </div>
+        <div class="admin-table-card">
+            <div style="padding:20px; font-weight:800; border-bottom:1px solid var(--gray-200)">Recent Activity</div>
+            <div style="padding:40px; text-align:center; color:var(--gray-400)">
+                <i class="fa fa-chart-area" style="font-size:48px; margin-bottom:16px;"></i>
+                <p>Activity charts will appear here as you gather more data.</p>
+            </div>
+        </div>
+    `;
+};
+
+const renderAdminProducts = () => {
+    const products = adminUtils.getProducts();
+    return `
+        <div class="admin-header">
+            <h1>Manage Products</h1>
+            <button class="btn-primary" id="addNewBtn"><i class="fa fa-plus"></i> Add Product</button>
+        </div>
+        <div class="admin-table-card">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Title</th>
+                        <th>Price</th>
+                        <th>Stock</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${products.map(p => `
+                        <tr>
+                            <td><img src="${p.featuredImage}" style="width:40px; height:40px; border-radius:6px; object-fit:cover;"></td>
+                            <td style="max-width:200px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${p.title}</td>
+                            <td>${p.price.toLocaleString()} ${p.currency}</td>
+                            <td>${p.stock}</td>
+                            <td>
+                                <button class="btn-ghost edit-btn" data-id="${p.id}">Edit</button>
+                                <button class="btn-ghost delete-btn" data-id="${p.id}" style="color:var(--red)">Delete</button>
+                            </td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+        </div>
+        <div style="margin-top:24px; text-align:right;">
+            <button class="btn-primary" id="exportBtn" style="background:var(--green)"><i class="fa fa-download"></i> Export products.json</button>
+        </div>
+    `;
+};
+
+const renderAdminOrders = () => {
+    const orders = JSON.parse(sessionStorage.getItem('captured_orders') || '[]');
+    return `
+        <div class="admin-header">
+            <h1>Orders</h1>
+        </div>
+        <div class="admin-table-card">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Customer</th>
+                        <th>Product</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${orders.reverse().map(o => `
+                        <tr>
+                            <td>${new Date().toLocaleDateString()}</td>
+                            <td>${o.customer_name}<br><small style="color:var(--gray-400)">${o.telephone}</small></td>
+                            <td>${o.product_name} x ${o.quantity}</td>
+                            <td>${(o.total || 0).toLocaleString()} CFA</td>
+                            <td><span style="padding:4px 8px; background:var(--green-l); color:var(--green); border-radius:4px; font-size:11px; font-weight:700;">COMPLETED</span></td>
+                        </tr>
+                    `).join('')}
+                    ${orders.length === 0 ? '<tr><td colspan="5" style="text-align:center; padding:40px; color:var(--gray-400)">No orders found yet.</td></tr>' : ''}
+                </tbody>
+            </table>
+        </div>
+    `;
+};
+
+const setupAdminEvents = () => {
+    const addNewBtn = document.getElementById('addNewBtn');
+    if (addNewBtn) {
+        addNewBtn.onclick = () => {
+            alert('Add product feature coming soon! For now, use the export button to see the current JSON structure.');
+        };
+    }
+
+    const exportBtn = document.getElementById('exportBtn');
+    if (exportBtn) {
+        exportBtn.onclick = () => {
+            const json = adminUtils.exportJSON();
+            const blob = new Blob([json], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'products.json';
+            a.click();
+        };
+    }
+
+    document.querySelectorAll('.delete-btn').forEach(btn => {
+        btn.onclick = () => {
+            if (confirm('Are you sure you want to delete this product?')) {
+                adminUtils.deleteProduct(btn.dataset.id);
+                renderAdmin();
+            }
+        };
+    });
+};
+
 
 // --- EVENT HANDLERS ---
 const setupGlobalEvents = () => {

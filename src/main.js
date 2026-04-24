@@ -656,8 +656,63 @@ const renderAdmin = () => {
 const renderAdminSubView = () => {
     const path = window.location.pathname;
     if (path === '/admin/products') return renderAdminProducts();
+    if (path === '/admin/products/new') return renderProductForm();
+    if (path.startsWith('/admin/products/edit/')) {
+        const id = path.split('/').pop();
+        const products = adminUtils.getProducts();
+        const p = products.find(prod => prod.id === id);
+        return renderProductForm(p);
+    }
     if (path === '/admin/orders') return renderAdminOrders();
     return renderAdminAnalytics();
+};
+
+const renderProductForm = (p = null) => {
+    const isEdit = !!p;
+    return `
+        <div class="admin-header">
+            <h1>${isEdit ? 'Edit Product' : 'Add New Product'}</h1>
+            <button class="btn-ghost" id="backBtn"><i class="fa fa-arrow-left"></i> Back</button>
+        </div>
+        <div class="admin-table-card" style="padding:32px;">
+            <form id="productForm">
+                <div class="admin-form-grid">
+                    <div class="form-group">
+                        <label class="form-label">ID (slug)</label>
+                        <input type="text" class="form-control" id="p-id" value="${p?.id || ''}" required ${isEdit ? 'readonly' : ''} placeholder="e.g. my-cool-product">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Title</label>
+                        <input type="text" class="form-control" id="p-title" value="${p?.title || ''}" required placeholder="Product Title">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Price</label>
+                        <input type="number" class="form-control" id="p-price" value="${p?.price || ''}" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Old Price (Optional)</label>
+                        <input type="number" class="form-control" id="p-priceOld" value="${p?.priceOld || ''}">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Stock</label>
+                        <input type="number" class="form-control" id="p-stock" value="${p?.stock || '100'}" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Featured Image URL</label>
+                        <input type="text" class="form-control" id="p-img" value="${p?.featuredImage || ''}" required>
+                    </div>
+                </div>
+                <div class="form-group" style="margin-top:20px;">
+                    <label class="form-label">Description (HTML supported)</label>
+                    <textarea class="form-control" id="p-desc" style="height:200px;">${p?.description || ''}</textarea>
+                </div>
+                <div style="margin-top:32px; display:flex; gap:12px; justify-content:flex-end;">
+                    <button type="button" class="btn-ghost" id="cancelForm">Cancel</button>
+                    <button type="submit" class="btn-primary">${isEdit ? 'Update Product' : 'Create Product'}</button>
+                </div>
+            </form>
+        </div>
+    `;
 };
 
 const renderAdminAnalytics = () => {
@@ -771,7 +826,40 @@ const setupAdminEvents = () => {
     const addNewBtn = document.getElementById('addNewBtn');
     if (addNewBtn) {
         addNewBtn.onclick = () => {
-            alert('Add product feature coming soon! For now, use the export button to see the current JSON structure.');
+            navigate('/admin/products/new');
+        };
+    }
+
+    const backBtn = document.getElementById('backBtn');
+    if (backBtn) {
+        backBtn.onclick = () => navigate('/admin/products');
+    }
+
+    const cancelForm = document.getElementById('cancelForm');
+    if (cancelForm) {
+        cancelForm.onclick = () => navigate('/admin/products');
+    }
+
+    const productForm = document.getElementById('productForm');
+    if (productForm) {
+        productForm.onsubmit = (e) => {
+            e.preventDefault();
+            const formData = {
+                id: document.getElementById('p-id').value,
+                title: document.getElementById('p-title').value,
+                price: parseInt(document.getElementById('p-price').value),
+                priceOld: parseInt(document.getElementById('p-priceOld').value) || null,
+                stock: document.getElementById('p-stock').value,
+                featuredImage: document.getElementById('p-img').value,
+                description: document.getElementById('p-desc').value,
+                currency: 'CFA', // Default
+                category: 'Uncategorized',
+                whatsapp: '2250701825463', // Default
+                pays: 'CI,SN,BF,TG,BJ,ML,GA,CM,NE,CG,CD,GN,TD',
+                reviews: '0'
+            };
+            adminUtils.upsertProduct(formData);
+            navigate('/admin/products');
         };
     }
 
@@ -787,6 +875,12 @@ const setupAdminEvents = () => {
             a.click();
         };
     }
+
+    document.querySelectorAll('.edit-btn').forEach(btn => {
+        btn.onclick = () => {
+            navigate('/admin/products/edit/' + btn.dataset.id);
+        };
+    });
 
     document.querySelectorAll('.delete-btn').forEach(btn => {
         btn.onclick = () => {

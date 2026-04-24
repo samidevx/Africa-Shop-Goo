@@ -166,7 +166,7 @@ const renderHome = () => {
                 <div class="header-spacer"></div>
                 <a href="/" class="site-logo">
                     <div class="site-logo-icon">🛒</div>
-                    LP Africa
+                    Lina Night Wear
                 </a>
                 <div class="header-spacer" style="display:flex; justify-content:flex-end;">
                     <button class="mode-toggle" id="dark-mode-toggle" aria-label="Changer le thème"><i class="fa fa-moon"></i><i class="fa fa-sun"></i></button>

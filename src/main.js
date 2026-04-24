@@ -604,16 +604,23 @@ const setupProductEvents = (p) => {
             thumbs[idx].classList.add('active');
         };
 
-        document.getElementById('prev-ig').onclick = () => {
-            let n = state.igIndex - 1;
-            if (n < 0) n = images.length - 1;
-            changeIg(n);
-        };
-        document.getElementById('next-ig').onclick = () => {
-            let n = state.igIndex + 1;
-            if (n >= images.length) n = 0;
-            changeIg(n);
-        };
+        const prevBtn = document.getElementById('prev-ig');
+        const nextBtn = document.getElementById('next-ig');
+
+        if (prevBtn) {
+            prevBtn.onclick = () => {
+                let n = state.igIndex - 1;
+                if (n < 0) n = images.length - 1;
+                changeIg(n);
+            };
+        }
+        if (nextBtn) {
+            nextBtn.onclick = () => {
+                let n = state.igIndex + 1;
+                if (n >= images.length) n = 0;
+                changeIg(n);
+            };
+        }
         thumbs.forEach(t => {
             t.onclick = () => changeIg(parseInt(t.dataset.index));
         });

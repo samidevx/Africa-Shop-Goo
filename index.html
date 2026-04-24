@@ -1,92 +1,108 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Lina Nightwear - Boutique E-commerce &amp; Mode</title>
-    <meta name="description" content="Découvrez notre collection exclusive de nightwear. Livraison rapide, paiement à la livraison et qualité premium garantie." />
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://linanightwear.com/" />
-    <meta property="og:title" content="Lina Nightwear - Mode &amp; Nightwear Premium" />
-    <meta property="og:description" content="Profitez de nos offres exclusives. Livraison rapide et paiement à la réception partout en Afrique." />
-    <meta property="og:image" content="https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=1200" />
-    <meta property="og:site_name" content="Lina Nightwear" />
 
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:url" content="https://linanightwear.com/" />
-    <meta name="twitter:title" content="Lina Nightwear - Mode &amp; Nightwear Premium" />
-    <meta name="twitter:description" content="Livraison rapide et paiement à la réception." />
-    <meta name="twitter:image" content="https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=1200" />
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lina Nightwear - Boutique E-commerce &amp; Mode</title>
+  <meta name="description"
+    content="Découvrez notre collection exclusive de nightwear. Livraison rapide, paiement à la livraison et qualité premium garantie." />
 
-    <!-- Preconnect to top 4 critical origins only (Lighthouse warns on 5+) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
-    <link rel="preconnect" href="https://blogger.googleusercontent.com" crossorigin />
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://linanightwear.com/" />
+  <meta property="og:title" content="Lina Nightwear - Mode &amp; Nightwear Premium" />
+  <meta property="og:description"
+    content="Profitez de nos offres exclusives. Livraison rapide et paiement à la réception partout en Afrique." />
+  <meta property="og:image"
+    content="https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=1200" />
+  <meta property="og:site_name" content="Lina Nightwear" />
 
-    <!-- Google Fonts: non-render-blocking -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'" />
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700;800&display=swap" /></noscript>
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://linanightwear.com/" />
+  <meta name="twitter:title" content="Lina Nightwear - Mode &amp; Nightwear Premium" />
+  <meta name="twitter:description" content="Livraison rapide et paiement à la réception." />
+  <meta name="twitter:image"
+    content="https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=1200" />
 
-    <!-- Font Awesome: non-render-blocking -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" media="print" onload="this.media='all'" />
-    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" /></noscript>
+  <!-- Preconnect to top 4 critical origins only (Lighthouse warns on 5+) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+  <link rel="preconnect" href="https://blogger.googleusercontent.com" crossorigin />
 
-    <!-- UTM Capture: Must run BEFORE SPA redirect to avoid losing params -->
-    <script type="text/javascript">
-      (function() {
-        try {
-          var search = window.location.search;
-          if (!search && window.location.href.indexOf('/?/') !== -1) {
-            var raw = window.location.href.split('/?/')[1] || '';
-            var qIdx = raw.indexOf('&');
-            if (qIdx !== -1) search = '?' + raw.substring(qIdx + 1);
-          }
-          var params = new URLSearchParams(search);
-          var utms = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'];
-          utms.forEach(function(k) { if (params.get(k)) sessionStorage.setItem(k, params.get(k)); });
-        } catch(e) {}
-      })();
-    </script>
+  <!-- Google Fonts: non-render-blocking -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700;800&display=swap"
+    media="print" onload="this.media='all'" />
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700;800&display=swap" />
+  </noscript>
 
-    <script type="text/javascript">
-      // Start Single Page Apps for GitHub Pages
-      (function(l) {
-        if (l.search[1] === '/' ) {
-          var decoded = l.search.slice(1).split('&').map(function(s) { 
-            return s.replace(/~and~/g, '&')
-          }).join('?');
-          window.history.replaceState(null, null,
-              l.pathname.slice(0, -1) + decoded + l.hash
-          );
+  <!-- Font Awesome: non-render-blocking -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" media="print"
+    onload="this.media='all'" />
+  <noscript>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  </noscript>
+
+  <!-- UTM Capture: Must run BEFORE SPA redirect to avoid losing params -->
+  <script type="text/javascript">
+    (function () {
+      try {
+        var search = window.location.search;
+        if (!search && window.location.href.indexOf('/?/') !== -1) {
+          var raw = window.location.href.split('/?/')[1] || '';
+          var qIdx = raw.indexOf('&');
+          if (qIdx !== -1) search = '?' + raw.substring(qIdx + 1);
         }
-      }(window.location))
-      // End Single Page Apps for GitHub Pages
-    </script>
-    
-    <!-- Meta Pixel: delayed 3s to avoid blocking TBT/LCP measurements -->
-    <script>
-      setTimeout(function() {
-        !function(f,b,e,v,n,t,s)
-        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-        n.queue=[];t=b.createElement(e);t.async=!0;
-        t.src=v;s=b.getElementsByTagName(e)[0];
-        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        var params = new URLSearchParams(search);
+        var utms = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'];
+        utms.forEach(function (k) { if (params.get(k)) sessionStorage.setItem(k, params.get(k)); });
+      } catch (e) { }
+    })();
+  </script>
+
+  <script type="text/javascript">
+    // Start Single Page Apps for GitHub Pages
+    (function (l) {
+      if (l.search[1] === '/') {
+        var decoded = l.search.slice(1).split('&').map(function (s) {
+          return s.replace(/~and~/g, '&')
+        }).join('?');
+        window.history.replaceState(null, null,
+          l.pathname.slice(0, -1) + decoded + l.hash
+        );
+      }
+    }(window.location))
+    // End Single Page Apps for GitHub Pages
+  </script>
+
+  <!-- Meta Pixel: delayed 3s to avoid blocking TBT/LCP measurements -->
+  <script>
+    setTimeout(function () {
+      !function (f, b, e, v, n, t, s) {
+        if (f.fbq) return; n = f.fbq = function () {
+          n.callMethod ?
+          n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+        };
+        if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+        n.queue = []; t = b.createElement(e); t.async = !0;
+        t.src = v; s = b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t, s)
+      }(window, document, 'script',
         'https://connect.facebook.net/en_US/fbevents.js');
-        fbq('init', '931050979555225');
-        fbq('track', 'PageView');
-      }, 3000);
-    </script>
-    <!-- End Meta Pixel Code -->
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.js"></script>
-  </body>
+      fbq('init', '950990427685437');
+      fbq('track', 'PageView');
+    }, 3000);
+  </script>
+  <!-- End Meta Pixel Code -->
+</head>
+
+<body>
+  <div id="app"></div>
+  <script type="module" src="/src/main.js"></script>
+</body>
+
 </html>

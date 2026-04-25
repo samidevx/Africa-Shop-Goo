@@ -494,7 +494,7 @@ const renderProduct = (p) => {
         </main>
         
         <div class="sticky-bar">
-            <a class="sticky-order" href="#orderFormBlock"><i class="fa fa-shopping-basket"></i> Commander Maintenant</a>
+            <a class="sticky-order" href="#orderFormBlock"><i class="fa fa-shopping-basket"></i> Commander</a>
             <a aria-label="WhatsApp" class="sticky-wa" href="https://wa.me/${p.whatsapp.replace(/\+/g, '')}?text=${encodeURIComponent(`Bonjour, je souhaite commander : ${p.title}\nLien : ${window.location.href}`)}" target="_blank"><i class="fab fa-whatsapp"></i></a>
         </div>
 
@@ -618,7 +618,7 @@ const renderAdminLogin = () => {
 const renderAdmin = () => {
     const app = document.getElementById('app');
     const path = window.location.pathname;
-    
+
     app.innerHTML = `
         <div class="admin-layout">
             <aside class="admin-sidebar">
@@ -815,7 +815,7 @@ const renderProductForm = (p = null) => {
 const renderAdminAnalytics = () => {
     const orders = JSON.parse(sessionStorage.getItem('captured_orders') || '[]');
     const totalRev = orders.reduce((acc, o) => acc + (o.total || 0), 0);
-    
+
     return `
         <div class="admin-header">
             <h1>Analytics Overview</h1>

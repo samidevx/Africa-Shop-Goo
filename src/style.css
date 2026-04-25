@@ -29,15 +29,20 @@ body.mode-nuit {
   color: var(--gray-800);
 }
 /* FORCE HIDE SYSTEM FOR MERCI PAGE */
-body.is-merci-page .site-header, 
-body.is-merci-page .site-footer, 
-body.is-merci-page .sticky-bar,
-body.is-merci-page .wa-float { 
+body.is-merci-page:not(.lp-mode-active) .site-header, 
+body.is-merci-page:not(.lp-mode-active) .site-footer, 
+body.is-merci-page:not(.lp-mode-active) .sticky-bar,
+body.is-merci-page:not(.lp-mode-active) .wa-float { 
   display: none !important; 
   opacity: 0 !important; 
   visibility: hidden !important; 
   height: 0 !important; 
   overflow: hidden !important;
+}
+/* Landing page specific: hide header/footer but KEEP sticky-bar */
+body.lp-mode-active .site-header,
+body.lp-mode-active .site-footer {
+  display: none !important;
 }
 body.is-merci-page { padding-top: 0 !important; margin: 0 !important; } /* Force merci layout */
 

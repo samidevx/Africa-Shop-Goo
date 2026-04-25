@@ -130,6 +130,7 @@ const router = () => {
     const path = window.location.pathname;
     const app = document.getElementById('app');
     app.className = ''; // Reset classes
+    document.body.classList.remove('lp-mode-active', 'is-merci-page');
 
     // --- ADMIN ROUTES ---
     if (path.startsWith('/admin')) {

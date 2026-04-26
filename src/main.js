@@ -232,7 +232,7 @@ const renderHome = () => {
         </div>
         <div class="sticky-bar">
             <a class="sticky-order" href="#catalogue"><i class="fa fa-bag-shopping"></i> Voir Nos Produits</a>
-            <a aria-label="WhatsApp" class="sticky-wa" href="https://wa.me/2250701825463?text=${encodeURIComponent("Bonjour, je souhaite avoir plus d'informations sur vos produits.")}" target="_blank"><i class="fab fa-whatsapp"></i></a>
+            <a aria-label="WhatsApp" class="sticky-wa" href="https://wa.me/2250701825463?text=${encodeURIComponent(window.location.origin + window.location.pathname)}" target="_blank"><i class="fab fa-whatsapp"></i></a>
         </div>
         ${renderFooter()}
     `;
@@ -496,7 +496,7 @@ const renderProduct = (p) => {
         
         <div class="sticky-bar">
             <a class="sticky-order" href="#orderFormBlock"><i class="fa fa-shopping-basket"></i> Commander</a>
-            <a aria-label="WhatsApp" class="sticky-wa" href="https://wa.me/${p.whatsapp.replace(/\+/g, '')}?text=${encodeURIComponent(`Bonjour, je souhaite commander : ${p.title}\nLien : ${window.location.href}`)}" target="_blank"><i class="fab fa-whatsapp"></i></a>
+            <a aria-label="WhatsApp" class="sticky-wa" href="https://wa.me/${p.whatsapp.replace(/\+/g, '')}?text=${encodeURIComponent(window.location.origin + window.location.pathname)}" target="_blank"><i class="fab fa-whatsapp"></i></a>
         </div>
 
         <!-- Modals -->

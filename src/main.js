@@ -231,8 +231,7 @@ const renderHome = () => {
             </div>
         </div>
         <div class="sticky-bar">
-            <a class="sticky-order" href="#catalogue"><i class="fa fa-bag-shopping"></i> Voir Nos Produits</a>
-            <a aria-label="WhatsApp" class="sticky-wa" href="https://wa.me/2250701825463?text=${encodeURIComponent(`Bonjour, je souhaite commander : \nLien : ${window.location.origin + window.location.pathname}`)}" target="_blank"><i class="fab fa-whatsapp"></i></a>
+            <a class="sticky-order" href="#catalogue" style="width: 100%;"><i class="fa fa-bag-shopping"></i> Voir Nos Produits</a>
         </div>
         ${renderFooter()}
     `;
@@ -569,7 +568,6 @@ const renderMerci = () => {
                     <div class="sum-total"><span>Statut :</span> <span style="color:var(--green)">En cours</span></div>
                 </div>
                 <p style="font-size: 13px; color: var(--gray-400); margin-bottom: 30px;">Un conseiller vous contactera dans les plus brefs délais pour confirmer la livraison.</p>
-                <a href="/" class="hero-btn" style="width: 100%; justify-content: center;">RETOUR À L'ACCUEIL</a>
             </div>
         </div>
     `;
@@ -1153,7 +1151,9 @@ const setupProductEvents = (p) => {
         Object.entries(utms).forEach(([k, v]) => formData.append(k, v));
 
         try {
-            await fetch(GOOGLE_SHEETS_WEBAPP_URL, { method: "POST", body: formData, mode: "no-cors" });
+            // Use keepalive: true so the request completes even after navigation
+            fetch(GOOGLE_SHEETS_WEBAPP_URL, { method: "POST", body: formData, mode: "no-cors", keepalive: true });
+            
             firePixel('Purchase', {
                 value: state.price * state.quantity,
                 currency: p.currency === 'CFA' ? 'XOF' : p.currency,
@@ -1168,7 +1168,11 @@ const setupProductEvents = (p) => {
                 quantity: state.quantity,
                 total: state.price * state.quantity
             }));
-            window.location.pathname = '/merci';
+            
+            // Redirect after a tiny delay to ensure everything is processed
+            setTimeout(() => {
+                window.location.pathname = '/merci';
+            }, 200);
         } catch (err) {
             btn.innerHTML = '❌ ÉCHEC, RÉESSAYER';
             btn.style.background = '#c81e1e';

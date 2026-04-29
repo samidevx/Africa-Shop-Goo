@@ -1222,6 +1222,8 @@ const setupProductEvents = (p) => {
             el.onchange = logAbandoned;
             if (el.id === 'tel') {
                 el.oninput = () => {
+                    // Force only numbers, spaces and +
+                    el.value = el.value.replace(/[^0-9+\s]/g, '');
                     if (el.value.replace(/\D/g, '').length >= 8) {
                         el.parentElement.classList.remove('error');
                     }

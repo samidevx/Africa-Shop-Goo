@@ -404,6 +404,7 @@ const renderProduct = (p) => {
                                 <div class="form-group">
                                     <label class="form-label" for="tel">📱 Téléphone <span class="req">*</span></label>
                                     <input type="tel" class="form-control" id="tel" placeholder="XX XXX XX XX" required>
+                                    <div class="error-msg" id="error-tel">Veuillez entrer un numéro valide (min 8 chiffres)</div>
                                 </div>
                             </div>
 
@@ -1098,6 +1099,18 @@ const setupProductEvents = (p) => {
     form.onsubmit = async (e) => {
         e.preventDefault();
 
+        const telInput = document.getElementById('tel');
+        const telVal = telInput.value.replace(/\D/g, '');
+        if (telVal.length < 8) {
+            telInput.parentElement.classList.add('error');
+            telInput.classList.add('shake');
+            setTimeout(() => telInput.classList.remove('shake'), 400);
+            telInput.focus();
+            return;
+        } else {
+            telInput.parentElement.classList.remove('error');
+        }
+
         // Track the completion of the form
         firePixel('InitiateCheckout', {
             value: state.price * state.quantity,
@@ -1172,7 +1185,9 @@ const setupProductEvents = (p) => {
         const requireds = Array.from(form.querySelectorAll('[required]'));
         const allValid = requireds.every(el => {
             if (el.type === 'checkbox') return el.checked;
-            return el.value && el.value.trim().length >= (el.type === 'tel' ? 8 : 2);
+            const val = el.value ? el.value.trim() : '';
+            if (el.id === 'tel') return val.replace(/\D/g, '').length >= 8;
+            return val.length >= 2;
         });
 
         if (allValid) {
@@ -1205,6 +1220,13 @@ const setupProductEvents = (p) => {
         formEl.querySelectorAll('input, select').forEach(el => {
             el.onblur = logAbandoned;
             el.onchange = logAbandoned;
+            if (el.id === 'tel') {
+                el.oninput = () => {
+                    if (el.value.replace(/\D/g, '').length >= 8) {
+                        el.parentElement.classList.remove('error');
+                    }
+                };
+            }
         });
     }
 

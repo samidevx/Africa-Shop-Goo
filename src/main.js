@@ -943,12 +943,14 @@ const setupAdminEvents = () => {
             theme: 'snow',
             modules: {
                 toolbar: [
-                    [{ 'header': [1, 2, 3, false] }],
+                    [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                    [{ 'size': ['small', false, 'large', 'huge'] }],
                     ['bold', 'italic', 'underline', 'strike'],
-                    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-                    ['link', 'image', 'clean'],
                     [{ 'color': [] }, { 'background': [] }],
-                    [{ 'align': [] }]
+                    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                    [{ 'align': [] }],
+                    ['link', 'image', 'video'],
+                    ['clean']
                 ]
             }
         });

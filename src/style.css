@@ -939,8 +939,11 @@ ol {
 
 .prod-desc img {
   border-radius: var(--radius);
-  margin: 16px auto;
-  max-width: 100%
+  margin: 24px auto;
+  max-width: 100% !important;
+  height: auto !important;
+  width: auto !important;
+  display: block;
 }
 
 .prod-desc blockquote {
@@ -2531,11 +2534,23 @@ body.mode-nuit .sticky-bar {
   border: 1px solid var(--gray-200) !important;
   border-radius: 0 0 8px 8px !important;
   font-family: var(--fb) !important;
-  font-size: 14px !important;
+  font-size: 15px !important;
+  background: #fff;
 }
 
 .ql-editor {
-  min-height: 200px;
+  min-height: 250px;
+  line-height: 1.6;
+}
+
+.ql-editor p {
+  margin-bottom: 12px;
+}
+
+.ql-editor h1, .ql-editor h2, .ql-editor h3 {
+  margin-top: 16px;
+  margin-bottom: 8px;
+  font-family: var(--fh);
 }
 
 .ql-editor.ql-blank::before {

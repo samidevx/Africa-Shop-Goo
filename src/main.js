@@ -293,20 +293,20 @@ const renderProduct = (p) => {
         <main class="product-page">
             ${isLP ? `<div class="prod-desc landing-mode-desc" style="margin-top:0; margin-bottom: 24px;">
                 <div id="d-desc-content">${(() => {
-                    let desc = p.description;
-                    // For LP, the first image is likely the LCP. Let's make it eager and optimized.
-                    let imgCount = 0;
-                    return desc.replace(/<img([^>]+)>/g, (match, attrs) => {
-                        imgCount++;
-                        if (imgCount === 1) {
-                            // First image: eager, high priority
-                            return `<img${attrs.replace(/loading=["']lazy["']/gi, '').replace(/fetchpriority=["'][^"']*["']/gi, '')} loading="eager" fetchpriority="high">`;
-                        } else {
-                            // Subsequent images: lazy
-                            return `<img${attrs.replace(/loading=["']eager["']/gi, '').replace(/fetchpriority=["'][^"']*["']/gi, '')} loading="lazy">`;
-                        }
-                    });
-                })()}</div>
+                let desc = p.description;
+                // For LP, the first image is likely the LCP. Let's make it eager and optimized.
+                let imgCount = 0;
+                return desc.replace(/<img([^>]+)>/g, (match, attrs) => {
+                    imgCount++;
+                    if (imgCount === 1) {
+                        // First image: eager, high priority
+                        return `<img${attrs.replace(/loading=["']lazy["']/gi, '').replace(/fetchpriority=["'][^"']*["']/gi, '')} loading="eager" fetchpriority="high">`;
+                    } else {
+                        // Subsequent images: lazy
+                        return `<img${attrs.replace(/loading=["']eager["']/gi, '').replace(/fetchpriority=["'][^"']*["']/gi, '')} loading="lazy">`;
+                    }
+                });
+            })()}</div>
             </div>` : ''}
 
             <div class="product-card">
@@ -428,7 +428,7 @@ const renderProduct = (p) => {
                                     <input type="text" class="form-control" id="nom" placeholder="Votre nom complet" required>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-label" for="adr"><i class="fa fa-location-dot" style="color: #f87171;"></i> Ville <span class="req">*</span></label>
+                                    <label class="form-label" for="adr"><i class="fa fa-location-dot" style="color: #c084fc;"></i> Ville <span class="req">*</span></label>
                                     <input type="text" class="form-control" id="adr" placeholder="Ville, Quartier" required>
                                 </div>
                             </div>
@@ -1241,7 +1241,7 @@ const setupProductEvents = (p) => {
         try {
             // Use keepalive: true so the request completes even after navigation
             fetch(GOOGLE_SHEETS_WEBAPP_URL, { method: "POST", body: formData, mode: "no-cors", keepalive: true });
-            
+
             firePixel('Purchase', {
                 value: state.price * state.quantity,
                 currency: p.currency === 'CFA' ? 'XOF' : p.currency,
@@ -1256,7 +1256,7 @@ const setupProductEvents = (p) => {
                 quantity: state.quantity,
                 total: state.price * state.quantity
             }));
-            
+
             // Redirect after a tiny delay to ensure everything is processed
             setTimeout(() => {
                 window.location.pathname = '/merci';

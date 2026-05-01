@@ -815,8 +815,14 @@ const renderProductForm = (p = null) => {
                     <textarea class="form-control" id="p-gallery" style="height:120px;" placeholder="URL 1&#10;URL 2">${(p?.gallery || []).join('\n')}</textarea>
                 </div>
                 <div class="form-group">
-                    <label class="form-label">Description (WordPress Editor style)</label>
-                    <div id="p-desc-editor" style="height:300px; background:white; border-radius: 0 0 8px 8px; font-family: var(--fb);">${p?.description || ''}</div>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                        <label class="form-label" style="margin-bottom:0;">Description (WordPress Editor style)</label>
+                        <button type="button" id="toggle-html" class="btn-ghost" style="padding:4px 8px; font-size:11px;"><i class="fa fa-code"></i> HTML Source</button>
+                    </div>
+                    <div id="editor-container">
+                        <div id="p-desc-editor" style="height:300px; background:white; border-radius: 0 0 8px 8px; font-family: var(--fb);">${p?.description || ''}</div>
+                        <textarea id="p-desc-html" class="form-control" style="height:300px; display:none; font-family:monospace; font-size:13px; background:#1e1e1e; color:#d4d4d4; border-radius:8px;">${p?.description || ''}</textarea>
+                    </div>
                     <input type="hidden" id="p-desc" value="${(p?.description || '').replace(/"/g, '&quot;')}">
                 </div>
                 <div style="margin-top:32px; display:flex; gap:12px; justify-content:flex-end;">
@@ -959,7 +965,43 @@ const setupAdminEvents = () => {
         quill.on('text-change', () => {
             const html = quill.root.innerHTML;
             document.getElementById('p-desc').value = html;
+            document.getElementById('p-desc-html').value = html;
         });
+
+        // HTML Source Toggle
+        const toggleBtn = document.getElementById('toggle-html');
+        const htmlTextarea = document.getElementById('p-desc-html');
+        const quillEditor = document.querySelector('.ql-container');
+        const quillToolbar = document.querySelector('.ql-toolbar');
+        let isHTML = false;
+
+        toggleBtn.onclick = () => {
+            isHTML = !isHTML;
+            if (isHTML) {
+                // Switching to HTML mode
+                htmlTextarea.value = quill.root.innerHTML;
+                htmlTextarea.style.display = 'block';
+                quillEditor.style.display = 'none';
+                quillToolbar.style.display = 'none';
+                toggleBtn.innerHTML = '<i class="fa fa-eye"></i> Visual Editor';
+                toggleBtn.style.background = 'var(--blue-l)';
+                toggleBtn.style.color = 'var(--blue)';
+            } else {
+                // Switching to Visual mode
+                quill.root.innerHTML = htmlTextarea.value;
+                htmlTextarea.style.display = 'none';
+                quillEditor.style.display = 'block';
+                quillToolbar.style.display = 'block';
+                toggleBtn.innerHTML = '<i class="fa fa-code"></i> HTML Source';
+                toggleBtn.style.background = '';
+                toggleBtn.style.color = '';
+            }
+        };
+
+        // Sync HTML textarea changes to hidden input
+        htmlTextarea.oninput = () => {
+            document.getElementById('p-desc').value = htmlTextarea.value;
+        };
     }
 
     const addNewBtn = document.getElementById('addNewBtn');

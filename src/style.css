@@ -2519,6 +2519,30 @@ body.mode-nuit .sticky-bar {
   animation: shake 0.4s ease-in-out;
 }
 
+/* QUILL EDITOR CUSTOM STYLES */
+.ql-toolbar.ql-snow {
+  border: 1px solid var(--gray-200) !important;
+  border-radius: 8px 8px 0 0 !important;
+  background: var(--gray-50);
+  padding: 12px !important;
+}
+
+.ql-container.ql-snow {
+  border: 1px solid var(--gray-200) !important;
+  border-radius: 0 0 8px 8px !important;
+  font-family: var(--fb) !important;
+  font-size: 14px !important;
+}
+
+.ql-editor {
+  min-height: 200px;
+}
+
+.ql-editor.ql-blank::before {
+  color: var(--gray-400) !important;
+  font-style: normal !important;
+}
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-5px); }
   to { opacity: 1; transform: translateY(0); }

@@ -815,8 +815,9 @@ const renderProductForm = (p = null) => {
                     <textarea class="form-control" id="p-gallery" style="height:120px;" placeholder="URL 1&#10;URL 2">${(p?.gallery || []).join('\n')}</textarea>
                 </div>
                 <div class="form-group">
-                    <label class="form-label">Description (HTML)</label>
-                    <textarea class="form-control" id="p-desc" style="height:200px;">${p?.description || ''}</textarea>
+                    <label class="form-label">Description (WordPress Editor style)</label>
+                    <div id="p-desc-editor" style="height:300px; background:white; border-radius: 0 0 8px 8px; font-family: var(--fb);">${p?.description || ''}</div>
+                    <input type="hidden" id="p-desc" value="${(p?.description || '').replace(/"/g, '&quot;')}">
                 </div>
                 <div style="margin-top:32px; display:flex; gap:12px; justify-content:flex-end;">
                     <button type="button" class="btn-ghost" id="cancelForm">Cancel</button>
@@ -935,6 +936,30 @@ const renderAdminOrders = () => {
 };
 
 const setupAdminEvents = () => {
+    // --- RICH TEXT EDITOR (Quill) ---
+    const editorEl = document.getElementById('p-desc-editor');
+    if (editorEl) {
+        const quill = new Quill('#p-desc-editor', {
+            theme: 'snow',
+            modules: {
+                toolbar: [
+                    [{ 'header': [1, 2, 3, false] }],
+                    ['bold', 'italic', 'underline', 'strike'],
+                    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                    ['link', 'image', 'clean'],
+                    [{ 'color': [] }, { 'background': [] }],
+                    [{ 'align': [] }]
+                ]
+            }
+        });
+
+        // Sync Quill content to hidden input before form submit
+        quill.on('text-change', () => {
+            const html = quill.root.innerHTML;
+            document.getElementById('p-desc').value = html;
+        });
+    }
+
     const addNewBtn = document.getElementById('addNewBtn');
     if (addNewBtn) {
         addNewBtn.onclick = () => {

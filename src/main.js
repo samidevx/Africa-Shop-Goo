@@ -368,11 +368,11 @@ const renderProduct = (p) => {
 
             <div class="order-col" id="orderFormBlock">
                 <div class="order-card">
-                    <div class="order-hdr" style="background: #2563eb;">
-                        <h2 style="font-family: var(--fh); font-size: 20px; font-weight: 800; display: flex; align-items: center; gap: 8px; margin: 0; color: #fff;">
+                    <div class="order-hdr">
+                        <h2>
                             <i class="fa fa-shopping-cart"></i> Passer ma commande
                         </h2>
-                        <p style="font-size: 13px; opacity: 0.9; margin-top: 5px;">Remplissez le formulaire ci-dessous</p>
+                        <p>Remplissez le formulaire ci-dessous</p>
                     </div>
                     <div class="order-body">
                         <div id="countdown-container" style="${p.countdown && p.countdown.toLowerCase() === 'yes' ? '' : 'display:none'}">
@@ -484,7 +484,7 @@ const renderProduct = (p) => {
                                 </div>
                             </div>
 
-                            <button type="submit" class="submit-btn ${p.animated && p.animated.toLowerCase() === 'yes' ? 'animated-yes' : ''}" id="submitBtn" style="background: #10b981; padding: 18px;">
+                            <button type="submit" class="submit-btn ${p.animated && p.animated.toLowerCase() === 'yes' ? 'animated-yes' : ''}" id="submitBtn">
                                 <i class="fa fa-lock"></i> Valider Ma Commande
                             </button>
                             <div class="pay-icons" style="margin-top: 15px; gap: 10px;">

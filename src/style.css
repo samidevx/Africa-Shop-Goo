@@ -31,22 +31,32 @@
 }
 
 body.mode-nuit {
-  --gray-50: #111827;
-  --gray-100: #1f2937;
-  --gray-200: #374151;
-  --gray-400: #9ca3af;
-  --gray-600: #d1d5db;
-  --gray-800: #f3f4f6;
-  --gray-900: #f9fafb;
-  --white: #1f2937;
-  --blue: #60a5fa;
-  --blue-l: #1e3a8a;
-  --green: #34d399;
-  --green-l: #064e3b;
+  /* Neutral Zinc Palette - Premium & Modern */
+  --gray-50: #09090b;   /* Main background */
+  --gray-100: #18181b;  /* Section/Card surface */
+  --gray-200: #27272a;  /* Subtle borders */
+  --gray-400: #71717a;  /* Muted text */
+  --gray-600: #d4d4d8;  /* Secondary text */
+  --gray-800: #f4f4f5;  /* Primary text */
+  --gray-900: #ffffff;  /* Headers */
+  
+  --white: #18181b;     /* Match surface for cards */
+  
+  /* Refined Accents */
+  --blue: #60a5fa;      /* Lighter blue for dark mode */
+  --blue-d: #3b82f6;    /* Base blue for gradients */
+  --blue-l: rgba(96, 165, 250, 0.1); 
+  
+  --green: #34d399;     /* Lighter green */
+  --green-d: #10b981;   /* Base green for gradients */
+  --green-l: rgba(52, 211, 153, 0.1);
+  
   --orange: #fb923c;
-  --orange-l: #7c2d12;
-  --red: #f87171;
-  --red-l: #7f1d1d;
+  --orange-l: rgba(251, 146, 60, 0.1);
+  
+  --red: #fb7185;
+  --red-l: rgba(251, 113, 133, 0.1);
+
   background: var(--gray-50);
   color: var(--gray-800);
 }
@@ -1032,7 +1042,14 @@ ol {
   border-radius: var(--radius-lg);
   border: 1px solid var(--gray-200);
   box-shadow: var(--shadow-sm);
-  overflow: hidden
+  overflow: hidden;
+  transition: border-color var(--ease), box-shadow var(--ease);
+}
+
+body.mode-nuit .order-card {
+  background: #09090b; /* Strong black background for the form container */
+  border: 1.5px solid var(--gray-200);
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.05), var(--shadow-lg);
 }
 
 .order-hdr {
@@ -1126,9 +1143,15 @@ body.mode-nuit .form-label i {
 }
 
 body.mode-nuit .form-control {
-  background: var(--gray-100);
-  border-color: var(--gray-200);
-  color: #fff
+  background: #18181b; /* Slightly lighter than the card for depth */
+  border-color: #3f3f46; /* More visible border */
+  color: #fff;
+}
+
+body.mode-nuit .form-control:focus {
+  border-color: var(--blue);
+  background: #18181b;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
 }
 
 .form-control:focus {

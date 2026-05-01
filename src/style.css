@@ -938,13 +938,43 @@ ol {
 }
 
 .prod-desc img {
-  border-radius: var(--radius);
-  margin: 24px auto;
+  border-radius: 4px;
   max-width: 100% !important;
-  height: auto !important;
-  width: auto !important;
-  display: block;
+  height: auto;
+  width: auto;
+  display: inline-block;
+  vertical-align: middle;
+  margin: 2px;
 }
+
+/* For large images or centered ones */
+.prod-desc p img, 
+.prod-desc div img,
+.prod-desc img.block-img {
+  display: block;
+  margin: 24px auto;
+  border-radius: var(--radius);
+}
+
+/* Specific fix for emojis */
+.prod-desc img[src*="emoji"],
+.prod-desc img[class*="emoji"],
+.prod-desc img[style*="width: 1em"],
+.prod-desc img[width^="1"],
+.prod-desc img[width^="2"],
+.prod-desc img[width^="3"] {
+  height: 1.2em !important;
+  width: auto !important;
+  display: inline-block !important;
+  margin: 0 2px !important;
+  vertical-align: -0.2em !important;
+}
+
+/* Quill Alignment Classes */
+.ql-align-center { text-align: center; }
+.ql-align-right { text-align: right; }
+.ql-align-justify { text-align: justify; }
+.ql-align-center img { margin-left: auto !important; margin-right: auto !important; display: block !important; }
 
 .prod-desc blockquote {
   border-left: 3px solid var(--blue);

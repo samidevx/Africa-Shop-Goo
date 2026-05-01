@@ -26,6 +26,10 @@ let state = {
 
 // --- UTILS ---
 const fmtPrice = (num) => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+const optimizeBloggerImg = (url, size = '600') => {
+    if (!url || !url.includes('blogger.googleusercontent.com')) return url;
+    return url.replace(/\/s\d+\//, `/w${size}/`).replace(/\/s\d+$/, `/w${size}`);
+};
 
 const getUTMParams = () => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -217,7 +221,7 @@ const renderHome = () => {
                 ${products.map(p => `
                     <a class="pcard ${p.modeBlack === 'yes' ? 'mode-nuit' : ''}" href="/product/${p.id}">
                         <div class="pcard-img">
-                            <img src="${p.featuredImage}" alt="${p.title}" loading="lazy">
+                            <img src="${optimizeBloggerImg(p.featuredImage, 400)}" alt="${p.title}" loading="lazy">
                             <span class="pcard-badge">🔥 Offre</span>
                         </div>
                         <div class="pcard-body">
@@ -257,7 +261,7 @@ const renderProduct = (p) => {
     else document.body.classList.remove('mode-nuit');
 
     // --- LCP PRELOAD: inject <link rel="preload"> for featured image ASAP ---
-    const lcpImg = (Array.isArray(p.gallery) && p.gallery.length > 0) ? p.gallery[0] : p.featuredImage;
+    const lcpImg = optimizeBloggerImg((Array.isArray(p.gallery) && p.gallery.length > 0) ? p.gallery[0] : p.featuredImage, 800);
     const existingPreload = document.getElementById('lcp-preload');
     if (existingPreload) existingPreload.remove();
     const preloadLink = document.createElement('link');
@@ -286,9 +290,23 @@ const renderProduct = (p) => {
                 </div>
             </div>
         </header>
-        <main class="product-page fade-in">
+        <main class="product-page">
             ${isLP ? `<div class="prod-desc landing-mode-desc" style="margin-top:0; margin-bottom: 24px;">
-                <div id="d-desc-content">${p.description.replace(/fetchpriority="high"/gi, 'loading="lazy"').replace(/<img(?!([^>]*loading=))/g, '<img loading="lazy" ')}</div>
+                <div id="d-desc-content">${(() => {
+                    let desc = p.description;
+                    // For LP, the first image is likely the LCP. Let's make it eager and optimized.
+                    let imgCount = 0;
+                    return desc.replace(/<img([^>]+)>/g, (match, attrs) => {
+                        imgCount++;
+                        if (imgCount === 1) {
+                            // First image: eager, high priority
+                            return `<img${attrs.replace(/loading=["']lazy["']/gi, '').replace(/fetchpriority=["'][^"']*["']/gi, '')} loading="eager" fetchpriority="high">`;
+                        } else {
+                            // Subsequent images: lazy
+                            return `<img${attrs.replace(/loading=["']eager["']/gi, '').replace(/fetchpriority=["'][^"']*["']/gi, '')} loading="lazy">`;
+                        }
+                    });
+                })()}</div>
             </div>` : ''}
 
             <div class="product-card">
@@ -298,12 +316,12 @@ const renderProduct = (p) => {
                         <div id="interactive-gallery">
                             <div class="ig-main">
                                 <button class="ig-btn ig-prev" id="prev-ig" aria-label="Image précédente"><i class="fa fa-chevron-left"></i></button>
-                                <img src="${(Array.isArray(p.gallery) ? p.gallery[0] : (p.images ? p.images[0] : p.featuredImage))}" id="ig-main-img" alt="${p.title}" fetchpriority="high" loading="eager">
+                                <img src="${optimizeBloggerImg(Array.isArray(p.gallery) ? p.gallery[0] : (p.images ? p.images[0] : p.featuredImage), 800)}" id="ig-main-img" alt="${p.title}" fetchpriority="high" loading="eager">
                                 <button class="ig-btn ig-next" id="next-ig" aria-label="Image suivante"><i class="fa fa-chevron-right"></i></button>
                             </div>
                             <div class="ig-thumbs" id="ig-thumbs">
                                 ${[p.featuredImage, ...(Array.isArray(p.gallery) ? p.gallery : (p.images || []))].map((img, i) => `
-                                    <div class="ig-thumb ${i === 0 ? 'active' : ''}" data-index="${i}"><img src="${img}" loading="lazy"></div>
+                                    <div class="ig-thumb ${i === 0 ? 'active' : ''}" data-index="${i}"><img src="${optimizeBloggerImg(img, 200)}" loading="lazy"></div>
                                 `).join('')}
                             </div>
                         </div>

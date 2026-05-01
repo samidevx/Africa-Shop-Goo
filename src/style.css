@@ -937,7 +937,8 @@ ol {
   list-style: decimal
 }
 
-.prod-desc img {
+.prod-desc img,
+.ql-editor img {
   border-radius: 4px;
   max-width: 100% !important;
   height: auto;
@@ -950,19 +951,23 @@ ol {
 /* For large images or centered ones */
 .prod-desc p img, 
 .prod-desc div img,
-.prod-desc img.block-img {
+.prod-desc img.block-img,
+.ql-editor p img,
+.ql-editor img.block-img {
   display: block;
   margin: 24px auto;
   border-radius: var(--radius);
 }
 
-/* Specific fix for emojis */
+/* Specific fix for emojis (both in site and editor) */
 .prod-desc img[src*="emoji"],
+.prod-desc img[src*="s.w.org"],
 .prod-desc img[class*="emoji"],
-.prod-desc img[style*="width: 1em"],
-.prod-desc img[width^="1"],
-.prod-desc img[width^="2"],
-.prod-desc img[width^="3"] {
+.ql-editor img[src*="emoji"],
+.ql-editor img[src*="s.w.org"],
+.ql-editor img[class*="emoji"],
+.prod-desc img[width^="1"], .prod-desc img[width^="2"], .prod-desc img[width^="3"],
+.ql-editor img[width^="1"], .ql-editor img[width^="2"], .ql-editor img[width^="3"] {
   height: 1.2em !important;
   width: auto !important;
   display: inline-block !important;

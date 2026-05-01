@@ -369,9 +369,7 @@ const renderProduct = (p) => {
             <div class="order-col" id="orderFormBlock">
                 <div class="order-card">
                     <div class="order-hdr">
-                        <h2>
-                            <i class="fa fa-shopping-cart"></i> Passer ma commande
-                        </h2>
+                        <h2><i class="fa fa-shopping-cart"></i> Passer ma commande</h2>
                         <p>Remplissez le formulaire ci-dessous</p>
                     </div>
                     <div class="order-body">
@@ -412,26 +410,25 @@ const renderProduct = (p) => {
                         <form id="orderForm">
                             <div class="form-row">
                                 <div class="form-group">
-                                    <label class="form-label" for="pays">🌍 Pays <span class="req">*</span></label>
+                                    <label class="form-label" for="pays"><i class="fa fa-globe" style="color: #60a5fa;"></i> Pays <span class="req">*</span></label>
                                     <select class="form-control" id="pays" required>
                                         <option value="">Choisir le pays</option>
                                         ${p.pays.split(',').map(c => `<option value="${c}">${COUNTRY_MAP[c] || c}</option>`).join('')}
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-label" for="tel">📱 Téléphone <span class="req">*</span></label>
+                                    <label class="form-label" for="tel"><i class="fa fa-mobile-screen-button" style="color: #a78bfa;"></i> Téléphone <span class="req">*</span></label>
                                     <input type="tel" class="form-control" id="tel" placeholder="XX XXX XX XX" required>
                                     <div class="error-msg" id="error-tel">Veuillez entrer un numéro valide (min 8 chiffres)</div>
                                 </div>
                             </div>
-
                             <div class="form-row">
                                 <div class="form-group">
-                                    <label class="form-label" for="nom">👤 Nom <span class="req">*</span></label>
+                                    <label class="form-label" for="nom"><i class="fa fa-user" style="color: #c084fc;"></i> Nom <span class="req">*</span></label>
                                     <input type="text" class="form-control" id="nom" placeholder="Votre nom complet" required>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-label" for="adr">📍 Ville <span class="req">*</span></label>
+                                    <label class="form-label" for="adr"><i class="fa fa-location-dot" style="color: #f87171;"></i> Ville <span class="req">*</span></label>
                                     <input type="text" class="form-control" id="adr" placeholder="Ville, Quartier" required>
                                 </div>
                             </div>

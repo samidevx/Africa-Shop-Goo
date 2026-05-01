@@ -1054,25 +1054,25 @@ body.mode-nuit .order-card {
 
 .order-hdr {
   background: linear-gradient(135deg, var(--blue-d), var(--blue));
-  padding: 22px 24px;
-  color: #fff
+  padding: 32px 24px;
+  color: #fff;
+  text-align: left;
 }
 
-.order-hdr h2,
-.order-hdr h3 {
+.order-hdr h2 {
   font-family: var(--fh);
-  font-size: 19px;
+  font-size: 24px;
   font-weight: 800;
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin: 0;
+  gap: 12px;
+  margin-bottom: 6px;
 }
 
 .order-hdr p {
-  font-size: 13px;
-  opacity: .8;
-  margin-top: 4px
+  font-size: 14px;
+  opacity: .9;
+  font-weight: 400;
 }
 
 .order-body {
@@ -1121,11 +1121,15 @@ body.mode-nuit .order-card {
 }
 
 body.mode-nuit .form-label {
-  color: var(--gray-300)
+  color: var(--gray-300);
+  font-weight: 700;
+  font-size: 14px;
 }
 
 body.mode-nuit .form-label i {
-  color: var(--blue)
+  font-size: 16px;
+  width: 20px;
+  text-align: center;
 }
 
 .form-control {
@@ -1182,7 +1186,7 @@ select.form-control {
   border: 1.5px solid #fcd34d;
   padding: 14px 16px;
   margin-bottom: 24px;
-  border-radius: 8px;
+  border-radius: 12px;
 }
 
 .confirm-box label {
@@ -1243,51 +1247,53 @@ select.form-control {
 }
 
 body.mode-nuit .confirm-box {
-  background: rgba(252, 211, 77, 0.05);
-  border-color: rgba(252, 211, 77, 0.2);
+  background: #fffcf0; /* Keep it yellow for 'strong' display as in image */
+  border-color: #fcd34d;
 }
 
 body.mode-nuit .confirm-box label {
-  color: var(--gray-400);
+  color: #92400e;
 }
 
 body.mode-nuit .order-summary {
-  background: rgba(254, 243, 199, 0.05);
+  background: #fffcf0; /* Strong yellow background as in image */
+  border-radius: 12px;
 }
 
 body.mode-nuit .order-summary .sum-row {
-  color: var(--gray-400);
+  color: #92400e;
+  font-weight: 600;
 }
 
 body.mode-nuit .order-summary .sum-total {
-  border-color: rgba(253, 230, 138, 0.2);
+  border-color: #fde68a;
 }
 
 body.mode-nuit .order-summary .sum-total span:first-child,
 body.mode-nuit .order-summary .sum-total span:last-child {
-  color: var(--blue);
+  color: #1e40af; /* Bold blue for price */
 }
 
 .submit-btn {
   width: 100%;
-  padding: 16px;
-  background: linear-gradient(135deg, var(--green), #10b981);
+  padding: 18px;
+  background: #10b981;
   color: #fff;
   border: none;
-  border-radius: var(--radius);
+  border-radius: 14px;
   font-family: var(--fh);
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 800;
   letter-spacing: .02em;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  box-shadow: 0 4px 16px rgba(5, 122, 85, .35);
+  gap: 10px;
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.35);
   position: relative;
   overflow: hidden;
-  transition: transform var(--ease), box-shadow var(--ease)
+  transition: transform var(--ease), box-shadow var(--ease);
 }
 
 .submit-btn:hover {
@@ -1404,8 +1410,11 @@ body.mode-nuit .order-summary .sum-total span:last-child {
 }
 
 body.mode-nuit .trust-badge {
-  background: #1e293b;
-  color: #94a3b8
+  background: #111827;
+  color: #d1d5db;
+  border: 1px solid #374151;
+  padding: 8px 16px;
+  border-radius: 8px;
 }
 
 body.mode-nuit .commit-msg i {

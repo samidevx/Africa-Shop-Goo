@@ -262,7 +262,7 @@ const renderProduct = (p) => {
     else document.body.classList.remove('mode-nuit');
 
     // --- LCP PRELOAD: inject <link rel="preload"> for featured image ASAP ---
-    const lcpImg = optimizeBloggerImg((Array.isArray(p.gallery) && p.gallery.length > 0) ? p.gallery[0] : p.featuredImage, 800);
+    const lcpImg = optimizeBloggerImg(p.featuredImage, 800);
     const existingPreload = document.getElementById('lcp-preload');
     if (existingPreload) existingPreload.remove();
     const preloadLink = document.createElement('link');
@@ -317,7 +317,7 @@ const renderProduct = (p) => {
                         <div id="interactive-gallery">
                             <div class="ig-main">
                                 <button class="ig-btn ig-prev" id="prev-ig" aria-label="Image précédente"><i class="fa fa-chevron-left"></i></button>
-                                <img src="${optimizeBloggerImg(Array.isArray(p.gallery) ? p.gallery[0] : (p.images ? p.images[0] : p.featuredImage), 800)}" id="ig-main-img" alt="${p.title}" fetchpriority="high" loading="eager">
+                                <img src="${optimizeBloggerImg(p.featuredImage, 800)}" id="ig-main-img" alt="${p.title}" fetchpriority="high" loading="eager">
                                 <button class="ig-btn ig-next" id="next-ig" aria-label="Image suivante"><i class="fa fa-chevron-right"></i></button>
                             </div>
                             <div class="ig-thumbs" id="ig-thumbs">

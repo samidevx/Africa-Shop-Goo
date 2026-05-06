@@ -529,8 +529,8 @@ const renderProduct = (p) => {
                 <h3 class="modal-ttl">Confirmer votre commande ?</h3>
                 <p class="modal-body">Souhaitez-vous valider votre commande de <strong>${p.title}</strong> ?</p>
                 <div class="order-summary" style="margin-bottom: 20px;">
-                    <div class="sum-row"><span>Produit :</span> <span>${p.title} x ${state.quantity}</span></div>
-                    <div class="sum-total"><span>Total :</span> <span>${fmtPrice(state.isBundle ? state.price : state.price * state.quantity)} ${p.currency}</span></div>
+                    <div class="sum-row"><span>Produit :</span> <span id="modal-prod-label">${p.title} x ${state.quantity}</span></div>
+                    <div class="sum-total"><span>Total :</span> <span id="modal-total-label">${fmtPrice(state.isBundle ? state.price : state.price * state.quantity)} ${p.currency}</span></div>
                 </div>
                 <div class="modal-btns">
                     <button class="modal-btn mbtn-cancel" id="m-cancel">Annuler</button>
@@ -1246,6 +1246,12 @@ const setupProductEvents = (p) => {
 
         const ok = await new Promise(res => {
             const modal = document.getElementById('modal-confirm');
+            // Update modal with CURRENT state (selected offer may have changed since render)
+            const modalTotal = state.isBundle ? state.price : state.price * state.quantity;
+            const prodLabel = document.getElementById('modal-prod-label');
+            const totalLabel = document.getElementById('modal-total-label');
+            if (prodLabel) prodLabel.textContent = `${p.title} x ${state.quantity}`;
+            if (totalLabel) totalLabel.textContent = `${fmtPrice(modalTotal)} ${p.currency}`;
             modal.classList.add('open');
             document.getElementById('m-ok').onclick = () => { modal.classList.remove('open'); res(true); };
             document.getElementById('m-cancel').onclick = () => { modal.classList.remove('open'); res(false); };

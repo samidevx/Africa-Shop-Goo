@@ -748,6 +748,11 @@ const renderProductForm = (p = null) => {
                             <option value="yes" ${p?.bundle === 'yes' ? 'selected' : ''}>Yes</option>
                         </select>
                     </div>
+                    <div class="form-group" id="offres-group" style="${p?.bundle === 'yes' ? '' : 'display:none'}">
+                        <label class="form-label">Bundle Offers (one per line: <code>qty,price,oldPrice,title</code>)</label>
+                        <textarea class="form-control" id="p-offres" style="height:120px; font-family:monospace; font-size:13px;" placeholder="1,19900,29900,1 Exemplaire (Offre Découverte)&#10;2,34900,59800,2 Exemplaires (Offre Duo)&#10;3,49900,89700,3 Exemplaires (Offre Famille)">${(p?.offres || []).map(o => `${o.qty},${o.price},${o.oldPrice},${o.title}`).join('\n')}</textarea>
+                        <small style="color:var(--gray-500); font-size:12px;">Format: <strong>quantity,price,old_price,title</strong> — one offer per line</small>
+                    </div>
                     <div class="form-group">
                         <label class="form-label">Show Countdown?</label>
                         <select class="form-control" id="p-countdown">
@@ -1008,6 +1013,15 @@ const setupAdminEvents = () => {
         };
     }
 
+    // Show/hide offres textarea based on bundle selection
+    const bundleSelect = document.getElementById('p-bundle');
+    const offresGroup = document.getElementById('offres-group');
+    if (bundleSelect && offresGroup) {
+        bundleSelect.onchange = () => {
+            offresGroup.style.display = bundleSelect.value === 'yes' ? '' : 'none';
+        };
+    }
+
     const addNewBtn = document.getElementById('addNewBtn');
     if (addNewBtn) {
         addNewBtn.onclick = () => {
@@ -1052,6 +1066,18 @@ const setupAdminEvents = () => {
                 reviews: document.getElementById('p-reviews').value,
                 featuredImage: document.getElementById('p-img').value,
                 gallery: document.getElementById('p-gallery').value.split('\n').map(s => s.trim()).filter(s => s.length > 0),
+                offres: (() => {
+                    const raw = document.getElementById('p-offres').value.trim();
+                    if (!raw) return [];
+                    return raw.split('\n').map(line => {
+                        const parts = line.split(',');
+                        const qty = parseInt(parts[0]) || 1;
+                        const price = parseInt(parts[1]) || 0;
+                        const oldPrice = parseInt(parts[2]) || 0;
+                        const title = parts.slice(3).join(',').trim();
+                        return { qty, price, oldPrice, title };
+                    }).filter(o => o.title);
+                })(),
                 description: document.getElementById('p-desc').value
             };
             adminUtils.upsertProduct(formData);

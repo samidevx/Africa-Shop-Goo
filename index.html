@@ -99,9 +99,8 @@
       fbq('track', 'PageView');
     }, 3000);
   </script>
-  <noscript><img height="1" width="1" style="display:none"
-      src="https://www.facebook.com/tr?id=950990427685437&ev=PageView&noscript=1" /></noscript>
   <!-- End Meta Pixel Code -->
+
 
   <!-- Quill.js Rich Text Editor -->
   <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
@@ -109,6 +108,9 @@
 </head>
 
 <body>
+  <!-- Facebook Pixel noscript fallback (must be in body, not head) -->
+  <noscript><img height="1" width="1" style="display:none"
+      src="https://www.facebook.com/tr?id=950990427685437&ev=PageView&noscript=1" /></noscript>
   <div id="app"></div>
   <script type="module" src="/src/main.js"></script>
 </body>

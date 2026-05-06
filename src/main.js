@@ -530,7 +530,7 @@ const renderProduct = (p) => {
                 <p class="modal-body">Souhaitez-vous valider votre commande de <strong>${p.title}</strong> ?</p>
                 <div class="order-summary" style="margin-bottom: 20px;">
                     <div class="sum-row"><span>Produit :</span> <span>${p.title} x ${state.quantity}</span></div>
-                    <div class="sum-total"><span>Total :</span> <span>${fmtPrice(state.price * state.quantity)} CFA</span></div>
+                    <div class="sum-total"><span>Total :</span> <span>${fmtPrice(state.isBundle ? state.price : state.price * state.quantity)} ${p.currency}</span></div>
                 </div>
                 <div class="modal-btns">
                     <button class="modal-btn mbtn-cancel" id="m-cancel">Annuler</button>
@@ -1282,8 +1282,9 @@ const setupProductEvents = (p) => {
             // Use keepalive: true so the request completes even after navigation
             fetch(GOOGLE_SHEETS_WEBAPP_URL, { method: "POST", body: formData, mode: "no-cors", keepalive: true });
 
+            const orderTotal = state.isBundle ? state.price : state.price * state.quantity;
             firePixel('Purchase', {
-                value: state.price * state.quantity,
+                value: orderTotal,
                 currency: p.currency === 'CFA' ? 'XOF' : p.currency,
                 content_name: p.title,
                 content_ids: [p.code || window.location.pathname],
@@ -1294,7 +1295,7 @@ const setupProductEvents = (p) => {
                 customer_name: document.getElementById('nom').value,
                 product_name: p.title,
                 quantity: state.quantity,
-                total: state.price * state.quantity
+                total: orderTotal
             }));
 
             // Redirect after a tiny delay to ensure everything is processed

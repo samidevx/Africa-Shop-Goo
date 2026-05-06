@@ -106,7 +106,12 @@
     "code": "COD18461",
     "whatsapp": "2250701825463",
     "pays": "BJ,CG,GA,TG",
-    "bundle": "no",
+    "bundle": "yes",
+     "offres": [
+      { "qty": 1, "price": 17900, "oldPrice": 24900, "title": "🥉1 Kit (4 Cahiers d’écriture réutilisables)" },
+      { "qty": 2, "price": 24900, "oldPrice": 35000, "title": "🥈 ⭐ 2 Kit (8 Cahiers d’écriture réutilisables)" },
+      { "qty": 3, "price": 31000, "oldPrice": 43000, "title": "🥇 ⭐ 3 Kit (12 Cahiers d’écriture réutilisables)" }
+    ],
     "countdown": "NO",
     "animated": "yes",
     "isLandingPage": "no",

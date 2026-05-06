@@ -1,48 +1,38 @@
 import productsData from './data/products.json';
 
-const STORAGE_KEY = 'admin_products';
-
 export const adminUtils = {
-    // Get products from storage or fallback to static json
+    // Always read directly from static products.json (no localStorage)
     getProducts: () => {
-        const stored = localStorage.getItem(STORAGE_KEY);
-        return stored ? JSON.parse(stored) : productsData;
+        return productsData;
     },
 
-    // Save products to local storage
-    saveProducts: (products) => {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(products));
-    },
+    // No-op: editing is done via export + commit to products.json
+    saveProducts: (_products) => { /* no-op: use exportJSON to save */ },
 
-    // Add or Update a product
+    // Add or Update a product (in-memory only, use exportJSON to persist)
     upsertProduct: (product) => {
-        const products = adminUtils.getProducts();
-        const index = products.findIndex(p => p.id === product.id);
+        const index = productsData.findIndex(p => p.id === product.id);
         if (index > -1) {
-            products[index] = product;
+            productsData[index] = product;
         } else {
-            products.push(product);
+            productsData.push(product);
         }
-        adminUtils.saveProducts(products);
     },
 
-    // Delete a product
+    // Delete a product (in-memory only, use exportJSON to persist)
     deleteProduct: (id) => {
-        const products = adminUtils.getProducts().filter(p => p.id !== id);
-        adminUtils.saveProducts(products);
+        const index = productsData.findIndex(p => p.id === id);
+        if (index > -1) productsData.splice(index, 1);
     },
 
-    // Export products.json content
+    // Export current products as a downloadable products.json
     exportJSON: () => {
-        const products = adminUtils.getProducts();
-        return JSON.stringify(products, null, 2);
+        return JSON.stringify(productsData, null, 2);
     },
 
-    // Fetch orders from Google Sheets (Mocking it for now if we don't have a GET endpoint)
+    // Fetch orders (falls back to sessionStorage for recent orders)
     fetchOrders: async (webhookUrl) => {
         try {
-            // If the user's Apps Script doesn't support GET, this will fail.
-            // We fallback to session storage for "recent" orders on this machine.
             const response = await fetch(webhookUrl);
             if (response.ok) return await response.json();
             return JSON.parse(sessionStorage.getItem('captured_orders') || '[]');

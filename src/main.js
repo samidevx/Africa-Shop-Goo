@@ -21,7 +21,7 @@ let state = {
     initiateCheckoutFired: false,
     lastAbandonedStr: "",
     igIndex: 0,
-    isAdmin: localStorage.getItem('admin_auth') === 'true'
+    isAdmin: sessionStorage.getItem('admin_auth') === 'true'
 };
 
 // --- UTILS ---
@@ -621,7 +621,7 @@ const renderAdminLogin = () => {
         e.preventDefault();
         const pass = document.getElementById('adminPass').value;
         if (pass === 'admin123') { // Default password
-            localStorage.setItem('admin_auth', 'true');
+            sessionStorage.setItem('admin_auth', 'true');
             state.isAdmin = true;
             navigate('/admin');
         } else {
@@ -654,7 +654,7 @@ const renderAdmin = () => {
     `;
 
     document.getElementById('logoutBtn').onclick = () => {
-        localStorage.removeItem('admin_auth');
+        sessionStorage.removeItem('admin_auth');
         state.isAdmin = false;
         navigate('/');
     };
@@ -1120,8 +1120,7 @@ const setupGlobalEvents = () => {
     const toggle = document.getElementById('dark-mode-toggle');
     if (toggle) {
         toggle.onclick = () => {
-            const isDark = document.body.classList.toggle('mode-nuit');
-            localStorage.setItem('theme-mode', isDark ? 'dark' : 'light');
+            document.body.classList.toggle('mode-nuit');
         };
     }
 };
@@ -1403,7 +1402,7 @@ const setupProductEvents = (p) => {
 // --- INIT ---
 window.addEventListener('popstate', router);
 window.addEventListener('DOMContentLoaded', () => {
-    if (localStorage.getItem('theme-mode') === 'dark') document.body.classList.add('mode-nuit');
+
 
     // Global link interceptor for SPA navigation
     document.addEventListener('click', (e) => {

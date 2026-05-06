@@ -21,7 +21,7 @@ export const adminUtils = {
         if (_cache) return _cache;
 
         // If no URL configured yet, use fallback immediately
-        if (!SHEETS_API_URL || SHEETS_API_URL === 'YOUR_APPS_SCRIPT_URL_HERE') {
+        if (!SHEETS_API_URL || SHEETS_API_URL === 'https://script.google.com/macros/s/AKfycbygRcPiy6ExpGOpmS0n3pxkM6a-FDFnv3gOf_k6i0HPlW8roSNFTaLZjdORNws6wE4RIA/exec') {
             console.warn('[adminUtils] SHEETS_API_URL not set — using local products.json');
             _cache = [...fallbackData];
             return _cache;

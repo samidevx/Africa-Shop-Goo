@@ -16,6 +16,7 @@ let state = {
     quantity: 1,
     price: 0,
     currency: 'CFA',
+    isBundle: false,
     cartSessionId: "ORD-" + Date.now().toString().slice(-6) + "-" + Math.floor(Math.random() * 1000),
     isSubmitting: false,
     initiateCheckoutFired: false,
@@ -1170,12 +1171,15 @@ const setupProductEvents = (p) => {
     // --- BUNDLES ---
     if (p.bundle === 'yes') {
         const bundleOpts = document.querySelectorAll('.bundle-opt');
+        // First option is active by default — set initial state
+        state.isBundle = true;
         bundleOpts.forEach(opt => {
             opt.onclick = () => {
                 bundleOpts.forEach(b => b.classList.remove('active'));
                 opt.classList.add('active');
                 state.quantity = parseInt(opt.dataset.qty);
                 state.price = parseInt(opt.dataset.price);
+                state.isBundle = true; // bundle price covers all qty
                 updateOrderSummary();
             };
         });
@@ -1185,13 +1189,18 @@ const setupProductEvents = (p) => {
     const btnM = document.getElementById('btn-qty-minus');
     const btnP = document.getElementById('btn-qty-plus');
     if (btnM && btnP) {
-        btnM.onclick = () => { if (state.quantity > 1) { state.quantity--; updateOrderSummary(); } };
-        btnP.onclick = () => { state.quantity++; updateOrderSummary(); };
+        btnM.onclick = () => { if (state.quantity > 1) { state.quantity--; state.isBundle = false; updateOrderSummary(); } };
+        btnP.onclick = () => { state.quantity++; state.isBundle = false; updateOrderSummary(); };
     }
 
     const updateOrderSummary = () => {
+        // For bundles: price already covers all units — don't multiply by qty
+        const total = state.isBundle ? state.price : state.price * state.quantity;
         document.getElementById('sum-qty').innerText = state.quantity;
-        document.getElementById('sum-total').innerText = fmtPrice(state.price * state.quantity) + ' ' + p.currency;
+        document.getElementById('sum-total').innerText = fmtPrice(total) + ' ' + p.currency;
+        // Also update the "Prix du produit" row to show the selected offer price
+        const priceRow = document.querySelector('.order-summary .sum-row:first-child span:last-child');
+        if (priceRow) priceRow.innerText = fmtPrice(state.price) + ' ' + p.currency;
         if (document.getElementById('manual-qty')) document.getElementById('manual-qty').value = state.quantity;
     };
 

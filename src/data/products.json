@@ -10,17 +10,12 @@
     "code": "COD05813",
     "whatsapp": "2250701825463",
     "pays": "CI,BF,TD,ML,GA,BJ",
-<<<<<<< HEAD
-    "code": "COD05813",
     "bundle": "yes",
     "offres": [
       { "qty": 1, "price": 19900, "oldPrice": 29900, "title": "1 Exemplaire (Offre Découverte)" },
       { "qty": 2, "price": 34900, "oldPrice": 59800, "title": "2 Exemplaires (Offre Duo)" },
       { "qty": 3, "price": 49900, "oldPrice": 89700, "title": "3 Exemplaires (Offre Famille)" }
     ],
-=======
-    "bundle": "no",
->>>>>>> 7daf9487351578910bcf20eac28cceba533c55e7
     "countdown": "NO",
     "animated": "yes",
     "isLandingPage": "yes",

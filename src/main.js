@@ -130,7 +130,7 @@ const updateSEO = (p = null) => {
 };
 
 // --- ROUTER ---
-const router = async () => {
+const router = () => {
     const path = window.location.pathname;
     const app = document.getElementById('app');
     app.className = ''; // Reset classes
@@ -153,14 +153,14 @@ const router = async () => {
     // Handle base paths if deployed in a subdirectory (common for GitHub Pages)
     const segments = path.split('/').filter(s => s.length > 0);
 
-    // Simple logic: if last segment is 'merci', show thank you page. 
+    // Simple logic: if last segment is 'merci', show thank you page.
     // If it starts with 'product', find id.
     if (path.endsWith('/merci') || path.endsWith('/merci/')) {
         renderMerci();
         updateSEO();
     } else if (path.includes('/product/')) {
         const id = path.split('/product/').pop().replace(/\//g, '');
-        const products = await adminUtils.getProducts();
+        const products = adminUtils.getProducts();
         const product = products.find(p => p.id === id);
         if (product) {
             renderProduct(product);
@@ -169,16 +169,16 @@ const router = async () => {
             navigate('/');
         }
     } else {
-        await renderHome();
+        renderHome();
         updateSEO();
     }
     window.scrollTo(0, 0);
 };
 
 // --- VIEWS ---
-const renderHome = async () => {
+const renderHome = () => {
     const app = document.getElementById('app');
-    const products = await adminUtils.getProducts();
+    const products = adminUtils.getProducts();
     app.innerHTML = `
         <div class="topbar">
             <span><i class="fa fa-truck"></i> Livraison Gratuite</span>
@@ -678,13 +678,13 @@ const renderAdmin = () => {
     setupAdminEvents();
 };
 
-const renderAdminSubView = async () => {
+const renderAdminSubView = () => {
     const path = window.location.pathname;
     if (path === '/admin/products') return renderAdminProducts();
     if (path === '/admin/products/new') return renderProductForm();
     if (path.startsWith('/admin/products/edit/')) {
         const id = path.split('/').pop();
-        const products = await adminUtils.getProducts();
+        const products = adminUtils.getProducts();
         const p = products.find(prod => prod.id === id);
         return renderProductForm(p);
     }
@@ -881,8 +881,8 @@ const renderAdminAnalytics = () => {
     `;
 };
 
-const renderAdminProducts = async () => {
-    const products = await adminUtils.getProducts();
+const renderAdminProducts = () => {
+    const products = adminUtils.getProducts();
     return `
         <div class="admin-header">
             <h1>Manage Products</h1>
@@ -1407,34 +1407,7 @@ const setupProductEvents = (p) => {
 
 // --- INIT ---
 window.addEventListener('popstate', router);
-window.addEventListener('DOMContentLoaded', async () => {
-
-    // Show a minimal loader while products are being fetched
-    const app = document.getElementById('app');
-    app.innerHTML = `
-        <div style="
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 16px;
-            font-family: var(--fh, sans-serif);
-            color: #64748b;
-        ">
-            <div style="
-                width: 44px; height: 44px;
-                border: 3px solid #e2e8f0;
-                border-top-color: #3b82f6;
-                border-radius: 50%;
-                animation: spin .7s linear infinite;
-            "></div>
-            <span style="font-size: 14px; font-weight: 600;">Chargement des produits...</span>
-        </div>
-    `;
-
-    // Pre-fetch & cache products before routing
-    await adminUtils.getProducts();
+window.addEventListener('DOMContentLoaded', () => {
 
     // Global link interceptor for SPA navigation
     document.addEventListener('click', (e) => {

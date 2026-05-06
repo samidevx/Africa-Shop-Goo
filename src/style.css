@@ -1738,42 +1738,48 @@ body.mode-nuit .sticky-bar {
 
 /* BUNDLE SYSTEM */
 .bundle-wrap {
-  margin-bottom: 20px;
-  background: #ffffff;
-  border-radius: 12px;
-  padding: 24px 18px;
-  border: 1px solid #cbd5e1;
+  margin-bottom: 24px;
 }
 
 .bundle-hdr {
+  font-family: var(--fh);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--gray-500);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin-bottom: 10px;
   display: flex;
   align-items: center;
+  gap: 6px;
+}
+
+#bundle-options {
+  display: flex;
+  flex-direction: column;
   gap: 8px;
-  font-family: var(--fh);
-  font-size: 16px;
-  font-weight: 800;
-  color: #1e293b;
-  margin-bottom: 28px;
-  justify-content: center;
 }
 
 .bundle-opt {
   position: relative;
-  background: #263145;
-  color: #ffffff;
-  border: 2px solid transparent;
-  border-radius: 10px;
-  padding: 18px 16px 16px 52px;
-  margin-bottom: 24px;
+  background: var(--white);
+  border: 2px solid var(--gray-200);
+  border-radius: 12px;
+  padding: 14px 16px 14px 48px;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: border-color 0.18s, box-shadow 0.18s, background 0.18s;
   text-align: left;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.bundle-opt:hover {
+  border-color: #93c5fd;
+  background: #f8faff;
 }
 
 .bundle-opt.active {
-  border-color: #60a5fa;
-  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2), 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-color: #3b82f6;
+  background: #eff6ff;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
 }
 
 .bundle-opt:last-child {
@@ -1785,81 +1791,153 @@ body.mode-nuit .sticky-bar {
   left: 16px;
   top: 50%;
   transform: translateY(-50%);
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
-  border: 2px solid #64748b;
-  background: transparent;
-  transition: all 0.2s;
+  border: 2px solid var(--gray-300);
+  background: var(--white);
+  transition: all 0.18s;
+  flex-shrink: 0;
 }
 
 .bundle-opt.active .bundle-radio {
-  border-color: #60a5fa;
-  background: #60a5fa;
-  box-shadow: inset 0 0 0 4px #263145;
-}
-
-.bundle-badge {
-  position: absolute;
-  top: -14px;
-  left: 16px;
-  font-size: 11px;
-  font-weight: 800;
-  padding: 4px 12px;
-  border-radius: 20px;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  font-family: var(--fh);
-  letter-spacing: 0.3px;
-}
-
-.badge-blue {
+  border-color: #3b82f6;
   background: #3b82f6;
-  color: #ffffff;
+  box-shadow: inset 0 0 0 4px #eff6ff;
 }
 
-.badge-red {
-  background: #ea580c;
-  background: linear-gradient(90deg, #ea580c, #dc2626);
-  color: #ffffff;
-  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
-  text-transform: uppercase;
-  font-size: 10px;
+.bundle-opt-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
 }
 
 .bundle-title {
-  font-weight: 800;
-  font-size: 14.5px;
-  margin-bottom: 6px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  line-height: 1.3;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--gray-800);
   font-family: var(--fh);
+  line-height: 1.3;
+}
+
+.bundle-opt.active .bundle-title {
+  color: #1d4ed8;
+}
+
+.bundle-qty-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--gray-100);
+  color: var(--gray-600);
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 20px;
+  margin-top: 3px;
+  font-family: var(--fh);
+}
+
+.bundle-opt.active .bundle-qty-pill {
+  background: #dbeafe;
+  color: #1d4ed8;
 }
 
 .bundle-prices {
   display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-left: 2px;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  flex-shrink: 0;
 }
 
 .bundle-price-now {
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 800;
-  color: #60a5fa;
+  color: var(--gray-800);
   font-family: var(--fh);
+  white-space: nowrap;
+}
+
+.bundle-opt.active .bundle-price-now {
+  color: #1d4ed8;
 }
 
 .bundle-price-old {
-  font-size: 13.5px;
-  color: #94a3b8;
+  font-size: 12px;
+  color: var(--gray-400);
   text-decoration: line-through;
-  font-weight: 600;
+  font-weight: 500;
+  white-space: nowrap;
 }
+
+.bundle-save-badge {
+  font-size: 10.5px;
+  font-weight: 800;
+  background: #dcfce7;
+  color: #15803d;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: var(--fh);
+}
+
+/* dark mode */
+body.mode-nuit .bundle-opt {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+body.mode-nuit .bundle-opt:hover {
+  border-color: #60a5fa;
+  background: #1a2744;
+}
+
+body.mode-nuit .bundle-opt.active {
+  border-color: #3b82f6;
+  background: #172554;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+body.mode-nuit .bundle-radio {
+  border-color: #475569;
+  background: #1e293b;
+}
+
+body.mode-nuit .bundle-opt.active .bundle-radio {
+  box-shadow: inset 0 0 0 4px #172554;
+}
+
+body.mode-nuit .bundle-title {
+  color: #e2e8f0;
+}
+
+body.mode-nuit .bundle-opt.active .bundle-title {
+  color: #93c5fd;
+}
+
+body.mode-nuit .bundle-price-now {
+  color: #e2e8f0;
+}
+
+body.mode-nuit .bundle-opt.active .bundle-price-now {
+  color: #93c5fd;
+}
+
+body.mode-nuit .bundle-qty-pill {
+  background: #334155;
+  color: #94a3b8;
+}
+
+body.mode-nuit .bundle-opt.active .bundle-qty-pill {
+  background: #1e3a5f;
+  color: #93c5fd;
+}
+
+body.mode-nuit .bundle-hdr {
+  color: #64748b;
+}
+
 
 /* COUNTDOWN SYSTEM */
 #countdown-container {

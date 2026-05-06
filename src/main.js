@@ -386,15 +386,21 @@ const renderProduct = (p) => {
 
                         ${p.bundle && p.bundle.toLowerCase() === 'yes' ? `
                             <div class="bundle-wrap">
-                                <div class="bundle-hdr">Sélectionnez votre Offre :</div>
+                                <div class="bundle-hdr">🎁 Sélectionnez votre Offre</div>
                                 <div id="bundle-options">
                                     ${p.offres.map((o, i) => `
                                         <div class="bundle-opt ${i === 0 ? 'active' : ''}" data-qty="${o.qty}" data-price="${o.price}" data-title="${o.title}">
                                             <div class="bundle-radio"></div>
-                                            <div class="bundle-title">${o.title}</div>
-                                            <div class="bundle-prices">
-                                                <span class="bundle-price-now">${fmtPrice(o.price)} ${p.currency}</span>
-                                                <span class="bundle-price-old">${fmtPrice(o.oldPrice)} ${p.currency}</span>
+                                            <div class="bundle-opt-inner">
+                                                <div>
+                                                    <div class="bundle-title">${o.title}</div>
+                                                    <div class="bundle-qty-pill">📦 x${o.qty}</div>
+                                                </div>
+                                                <div class="bundle-prices">
+                                                    <span class="bundle-price-now">${fmtPrice(o.price)} ${p.currency}</span>
+                                                    <span class="bundle-price-old">${fmtPrice(o.oldPrice)} ${p.currency}</span>
+                                                    ${o.oldPrice > o.price ? `<span class="bundle-save-badge">-${Math.round((o.oldPrice - o.price) / o.oldPrice * 100)}%</span>` : ''}
+                                                </div>
                                             </div>
                                         </div>
                                     `).join('')}

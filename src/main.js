@@ -130,7 +130,7 @@ const updateSEO = (p = null) => {
 };
 
 // --- ROUTER ---
-const router = () => {
+const router = async () => {
     const path = window.location.pathname;
     const app = document.getElementById('app');
     app.className = ''; // Reset classes
@@ -160,7 +160,7 @@ const router = () => {
         updateSEO();
     } else if (path.includes('/product/')) {
         const id = path.split('/product/').pop().replace(/\//g, '');
-        const products = adminUtils.getProducts();
+        const products = await adminUtils.getProducts();
         const product = products.find(p => p.id === id);
         if (product) {
             renderProduct(product);
@@ -169,16 +169,16 @@ const router = () => {
             navigate('/');
         }
     } else {
-        renderHome();
+        await renderHome();
         updateSEO();
     }
     window.scrollTo(0, 0);
 };
 
 // --- VIEWS ---
-const renderHome = () => {
+const renderHome = async () => {
     const app = document.getElementById('app');
-    const products = adminUtils.getProducts();
+    const products = await adminUtils.getProducts();
     app.innerHTML = `
         <div class="topbar">
             <span><i class="fa fa-truck"></i> Livraison Gratuite</span>
@@ -678,13 +678,13 @@ const renderAdmin = () => {
     setupAdminEvents();
 };
 
-const renderAdminSubView = () => {
+const renderAdminSubView = async () => {
     const path = window.location.pathname;
     if (path === '/admin/products') return renderAdminProducts();
     if (path === '/admin/products/new') return renderProductForm();
     if (path.startsWith('/admin/products/edit/')) {
         const id = path.split('/').pop();
-        const products = adminUtils.getProducts();
+        const products = await adminUtils.getProducts();
         const p = products.find(prod => prod.id === id);
         return renderProductForm(p);
     }
@@ -881,8 +881,8 @@ const renderAdminAnalytics = () => {
     `;
 };
 
-const renderAdminProducts = () => {
-    const products = adminUtils.getProducts();
+const renderAdminProducts = async () => {
+    const products = await adminUtils.getProducts();
     return `
         <div class="admin-header">
             <h1>Manage Products</h1>
@@ -1407,8 +1407,34 @@ const setupProductEvents = (p) => {
 
 // --- INIT ---
 window.addEventListener('popstate', router);
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('DOMContentLoaded', async () => {
 
+    // Show a minimal loader while products are being fetched
+    const app = document.getElementById('app');
+    app.innerHTML = `
+        <div style="
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            font-family: var(--fh, sans-serif);
+            color: #64748b;
+        ">
+            <div style="
+                width: 44px; height: 44px;
+                border: 3px solid #e2e8f0;
+                border-top-color: #3b82f6;
+                border-radius: 50%;
+                animation: spin .7s linear infinite;
+            "></div>
+            <span style="font-size: 14px; font-weight: 600;">Chargement des produits...</span>
+        </div>
+    `;
+
+    // Pre-fetch & cache products before routing
+    await adminUtils.getProducts();
 
     // Global link interceptor for SPA navigation
     document.addEventListener('click', (e) => {

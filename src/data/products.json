@@ -2,7 +2,7 @@
   {
     "id": "kine",
     "title": "Kiné-sciatique™ - Comment j'ai évité l'opération de la hanche et éliminé ma sciatique en 4 semaines",
-    "price": 19900,
+    "price": 22500,
     "priceOld": 29900,
     "currency": "CFA",
     "category": "Électronique",
@@ -108,9 +108,9 @@
     "pays": "BJ,CG,GA,TG",
     "bundle": "yes",
      "offres": [
-      { "qty": 1, "price": 17900, "oldPrice": 24900, "title": "🥉1 Kit (4 Cahiers d’écriture réutilisables)" },
-      { "qty": 2, "price": 24900, "oldPrice": 35000, "title": "🥈 ⭐ 2 Kit (8 Cahiers d’écriture réutilisables)" },
-      { "qty": 3, "price": 31000, "oldPrice": 43000, "title": "🥇 ⭐ 3 Kit (12 Cahiers d’écriture réutilisables)" }
+      { "qty": 1, "price": 19900, "oldPrice": 24900, "title": "🥉1 Kit (4 Cahiers d’écriture réutilisables)" },
+      { "qty": 2, "price": 28900, "oldPrice": 35000, "title": "🥈 ⭐ 2 Kit (8 Cahiers d’écriture réutilisables)" },
+      { "qty": 3, "price": 36000, "oldPrice": 43000, "title": "🥇 ⭐ 3 Kit (12 Cahiers d’écriture réutilisables)" }
     ],
     "countdown": "NO",
     "animated": "yes",
@@ -200,7 +200,7 @@
   {
     "id": "waterbook",
     "title": "WaterBook™ - Livre Magique à l’Eau pour les enfants - Coloriage Réutilisable à l’Infini",
-    "price": 13900,
+    "price": 14900,
     "priceOld": 21900,
     "currency": "CFA",
     "category": "education",

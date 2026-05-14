@@ -12,7 +12,7 @@
     "pays": "CI,BF,TD,ML,GA,BJ",
     "bundle": "no",
     "offres": [
-      { "qty": 1, "price": 19900, "oldPrice": 29900, "title": "1 Exemplaire (Offre Découverte)" },
+      { "qty": 1, "price": 22500, "oldPrice": 29900, "title": "1 Exemplaire (Offre Découverte)" },
       { "qty": 2, "price": 34900, "oldPrice": 59800, "title": "2 Exemplaires (Offre Duo)" },
       { "qty": 3, "price": 49900, "oldPrice": 89700, "title": "3 Exemplaires (Offre Famille)" }
     ],
@@ -36,7 +36,7 @@
   {
     "id": "kine-gn",
     "title": "Kiné-sciatique™ - Comment j'ai évité l'opération de la hanche et éliminé ma sciatique en 4 semaines",
-    "price": 320000,
+    "price": 340000,
     "priceOld": 490000,
     "currency": "GNF",
     "category": "health",
@@ -98,7 +98,7 @@
   {
     "id": "alphabook",
     "title": "Alphabook™ ORIGINAL - 4 Cahiers d’écriture réutilisables – apprentissage de l’écriture pour l’enfant avec Magic Pen",
-    "price": 17900,
+    "price": 19900,
     "priceOld": 24900,
     "currency": "CFA",
     "category": "education",
@@ -132,7 +132,7 @@
   {
     "id": "alphabook-gn",
     "title": "Alphabook™ ORIGINAL - 4 Cahiers d’écriture réutilisables – apprentissage de l’écriture pour l’enfant avec Magic Pen",
-    "price": 270000,
+    "price": 280000,
     "priceOld": 370000,
     "currency": "GNF",
     "category": "education",
@@ -142,9 +142,9 @@
     "pays": "GN",
     "bundle": "yes",
      "offres": [
-      { "qty": 1, "price": 270000, "oldPrice": 370000, "title": "🥉1 Kit (4 Cahiers d’écriture réutilisables)" },
+      { "qty": 1, "price": 280000, "oldPrice": 370000, "title": "🥉1 Kit (4 Cahiers d’écriture réutilisables)" },
       { "qty": 2, "price": 380000, "oldPrice": 540000, "title": "🥈 ⭐ 2 Kit (8 Cahiers d’écriture réutilisables)" },
-      { "qty": 3, "price": 560000, "oldPrice": 810000, "title": "🥇 ⭐ 3 Kit (12 Cahiers d’écriture réutilisables)" }
+      { "qty": 3, "price": 490000, "oldPrice": 810000, "title": "🥇 ⭐ 3 Kit (12 Cahiers d’écriture réutilisables)" }
     ],
     "countdown": "NO",
     "animated": "yes",
@@ -210,7 +210,7 @@
     "pays": "BF,BJ,GA,TD",
     "bundle": "yes",
      "offres": [
-      { "qty": 1, "price": 13900, "oldPrice": 21900, "title": "🥉1 Livre Magique à l’Eau" },
+      { "qty": 1, "price": 14900, "oldPrice": 21900, "title": "🥉1 Livre Magique à l’Eau" },
       { "qty": 2, "price": 19900, "oldPrice": 27900, "title": "🥈 ⭐ 2 Livres Magiques à l’Eau" },
       { "qty": 3, "price": 22900, "oldPrice": 41900, "title": "🥇 ⭐ 3 Livres Magiques à l’Eau" }
     ],
@@ -270,7 +270,7 @@
   {
     "id": "neoflex",
     "title": "✅ NeoFlex™ - Dites adieu à l’arthrose : cette genouillère change tout.",
-    "price": 14900,
+    "price": 16900,
     "priceOld": 21900,
     "currency": "CFA",
     "category": "education",
@@ -280,7 +280,7 @@
     "pays": "CI,GA,ML,TD",
     "bundle": "yes",
      "offres": [
-      { "qty": 1, "price": 14900, "oldPrice": 21900, "title": "🥉1 Genouillère NeoFlex™" },
+      { "qty": 1, "price": 16900, "oldPrice": 21900, "title": "🥉1 Genouillère NeoFlex™" },
       { "qty": 2, "price": 19900, "oldPrice": 26000, "title": "🥈 ⭐ 2 Genouillère NeoFlex™ - 1 Paire (Offre Recommandé)" },
       { "qty": 4, "price": 26900, "oldPrice": 50000, "title": "🥇 ⭐4 Genouillère NeoFlex™ - 2 Paire" }
     ],

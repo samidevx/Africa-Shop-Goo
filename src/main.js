@@ -1238,8 +1238,9 @@ const setupProductEvents = (p) => {
         }
 
         // Track the completion of the form
+        const finalTotal = state.isBundle ? state.price : state.price * state.quantity;
         firePixel('InitiateCheckout', {
-            value: state.price * state.quantity,
+            value: finalTotal,
             currency: p.currency === 'CFA' ? 'XOF' : p.currency,
             content_name: p.title
         });
@@ -1247,7 +1248,7 @@ const setupProductEvents = (p) => {
         const ok = await new Promise(res => {
             const modal = document.getElementById('modal-confirm');
             // Update modal with CURRENT state (selected offer may have changed since render)
-            const modalTotal = state.isBundle ? state.price : state.price * state.quantity;
+            const modalTotal = finalTotal;
             const prodLabel = document.getElementById('modal-prod-label');
             const totalLabel = document.getElementById('modal-total-label');
             if (prodLabel) prodLabel.textContent = `${p.title} x ${state.quantity}`;
@@ -1269,7 +1270,7 @@ const setupProductEvents = (p) => {
         formData.append("pays", document.getElementById('pays').value);
         formData.append("adresse", document.getElementById('adr').value);
         formData.append("produit", p.title);
-        formData.append("prix", (state.price * state.quantity) + " " + p.currency);
+        formData.append("prix", finalTotal + " " + p.currency);
         formData.append("quantity", state.quantity);
         formData.append("platform", "GitHubPages");
         formData.append("order_id", state.cartSessionId);
@@ -1288,9 +1289,8 @@ const setupProductEvents = (p) => {
             // Use keepalive: true so the request completes even after navigation
             fetch(GOOGLE_SHEETS_WEBAPP_URL, { method: "POST", body: formData, mode: "no-cors", keepalive: true });
 
-            const orderTotal = state.isBundle ? state.price : state.price * state.quantity;
             firePixel('Purchase', {
-                value: orderTotal,
+                value: finalTotal,
                 currency: p.currency === 'CFA' ? 'XOF' : p.currency,
                 content_name: p.title,
                 content_ids: [p.code || window.location.pathname],
@@ -1301,7 +1301,7 @@ const setupProductEvents = (p) => {
                 customer_name: document.getElementById('nom').value,
                 product_name: p.title,
                 quantity: state.quantity,
-                total: orderTotal
+                total: finalTotal
             }));
 
             // Redirect after a tiny delay to ensure everything is processed
@@ -1345,7 +1345,8 @@ const setupProductEvents = (p) => {
             formData.append("pays", pays);
             formData.append("adresse", adr);
             formData.append("produit", p.title);
-            formData.append("prix", (state.price * state.quantity) + " " + p.currency);
+            const abandonedTotal = state.isBundle ? state.price : state.price * state.quantity;
+            formData.append("prix", abandonedTotal + " " + p.currency);
             formData.append("quantity", state.quantity);
             formData.append("status", "ABANDONED");
             formData.append("code", p.code || "");

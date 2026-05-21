@@ -348,13 +348,13 @@
     "pays": "GN",
     "bundle": "yes",
      "offres": [
-      { "qty": 1, "price": 290000, "oldPrice": 349000, "title": "🥉1 Genouillère Flytex™" },
-      { "qty": 2, "price": 360000, "oldPrice": 420000, "title": "🥈 ⭐ 2 Genouillère Flytex™ - 1 Paire (Offre Recommandé)" },
+      { "qty": 1, "price": 270000, "oldPrice": 349000, "title": "🥉1 Genouillère Flytex™" },
+      { "qty": 2, "price": 350000, "oldPrice": 420000, "title": "🥈 ⭐ 2 Genouillère Flytex™ - 1 Paire (Offre Recommandé)" },
       { "qty": 4, "price": 470000, "oldPrice": 680000, "title": "🥇 ⭐ Achetez 2 – Obtenez 2 Pièces Gratuite (4 Pièces)" }
     ],
     "countdown": "NO",
     "animated": "yes",
-    "isLandingPage": "no",
+    "isLandingPage": "yes",
     "modeBlack": "no",
     "showQuantity": "NO",
     "couleur": "",

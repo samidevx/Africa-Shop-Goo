@@ -2,14 +2,14 @@
   {
     "id": "kine",
     "title": "Kiné-sciatique™ - Comment j'ai évité l'opération de la hanche et éliminé ma sciatique en 4 semaines",
-    "price": 22500,
+    "price": 19900,
     "priceOld": 29900,
     "currency": "CFA",
     "category": "Électronique",
     "stock": "25",
     "code": "COD05813",
     "whatsapp": "2250701825463",
-    "pays": "CI,BF,TD,ML,GA,BJ",
+    "pays": "CI,BF,TD,ML,GA,BJ,CG",
     "bundle": "no",
     "offres": [
       { "qty": 1, "price": 22500, "oldPrice": 29900, "title": "1 Exemplaire (Offre Découverte)" },
@@ -36,7 +36,7 @@
   {
     "id": "kine-gn",
     "title": "Kiné-sciatique™ - Comment j'ai évité l'opération de la hanche et éliminé ma sciatique en 4 semaines",
-    "price": 340000,
+    "price": 320000,
     "priceOld": 490000,
     "currency": "GNF",
     "category": "health",
@@ -98,7 +98,7 @@
   {
     "id": "alphabook",
     "title": "Alphabook™ ORIGINAL - 4 Cahiers d’écriture réutilisables – apprentissage de l’écriture pour l’enfant avec Magic Pen",
-    "price": 19900,
+    "price": 17900,
     "priceOld": 24900,
     "currency": "CFA",
     "category": "education",
@@ -108,9 +108,9 @@
     "pays": "BJ,CG,GA,TG",
     "bundle": "yes",
      "offres": [
-      { "qty": 1, "price": 19900, "oldPrice": 24900, "title": "🥉1 Kit (4 Cahiers d’écriture réutilisables)" },
-      { "qty": 2, "price": 28900, "oldPrice": 35000, "title": "🥈 ⭐ 2 Kit (8 Cahiers d’écriture réutilisables)" },
-      { "qty": 3, "price": 36000, "oldPrice": 43000, "title": "🥇 ⭐ 3 Kit (12 Cahiers d’écriture réutilisables)" }
+      { "qty": 1, "price": 17900, "oldPrice": 24900, "title": "🥉1 Kit (4 Cahiers d’écriture réutilisables)" },
+      { "qty": 2, "price": 25900, "oldPrice": 35000, "title": "🥈 ⭐ 2 Kit (8 Cahiers d’écriture réutilisables)" },
+      { "qty": 3, "price": 32000, "oldPrice": 43000, "title": "🥇 ⭐ 3 Kit (12 Cahiers d’écriture réutilisables)" }
     ],
     "countdown": "NO",
     "animated": "yes",
@@ -200,7 +200,7 @@
   {
     "id": "waterbook",
     "title": "WaterBook™ - Livre Magique à l’Eau pour les enfants - Coloriage Réutilisable à l’Infini",
-    "price": 14900,
+    "price": 13900,
     "priceOld": 21900,
     "currency": "CFA",
     "category": "education",
@@ -210,7 +210,7 @@
     "pays": "BF,BJ,GA,TD,CM",
     "bundle": "yes",
      "offres": [
-      { "qty": 1, "price": 14900, "oldPrice": 21900, "title": "🥉1 Livre Magique à l’Eau" },
+      { "qty": 1, "price": 13900, "oldPrice": 21900, "title": "🥉1 Livre Magique à l’Eau" },
       { "qty": 2, "price": 19900, "oldPrice": 27900, "title": "🥈 ⭐ 2 Livres Magiques à l’Eau" },
       { "qty": 3, "price": 22900, "oldPrice": 41900, "title": "🥇 ⭐ 3 Livres Magiques à l’Eau" }
     ],
@@ -270,7 +270,7 @@
   {
     "id": "neoflex",
     "title": "✅ NeoFlex™ - Dites adieu à l’arthrose : cette genouillère change tout.",
-    "price": 16900,
+    "price": 15900,
     "priceOld": 21900,
     "currency": "CFA",
     "category": "education",
@@ -280,9 +280,9 @@
     "pays": "CI,GA,ML,TD",
     "bundle": "yes",
      "offres": [
-      { "qty": 1, "price": 16900, "oldPrice": 21900, "title": "🥉1 Genouillère NeoFlex™" },
-      { "qty": 2, "price": 19900, "oldPrice": 26000, "title": "🥈 ⭐ 2 Genouillère NeoFlex™ - 1 Paire (Offre Recommandé)" },
-      { "qty": 4, "price": 26900, "oldPrice": 50000, "title": "🥇 ⭐4 Genouillère NeoFlex™ - 2 Paire" }
+      { "qty": 1, "price": 15900, "oldPrice": 21900, "title": "🥉1 Genouillère NeoFlex™" },
+      { "qty": 2, "price": 18900, "oldPrice": 26000, "title": "🥈 ⭐ 2 Genouillère NeoFlex™ - 1 Paire (Offre Recommandé)" },
+      { "qty": 4, "price": 24900, "oldPrice": 50000, "title": "🥇 ⭐4 Genouillère NeoFlex™ - 2 Paire" }
     ],
     "countdown": "NO",
     "animated": "yes",
@@ -338,7 +338,7 @@
   {
     "id": "flytex-gn",
     "title": "FlyTex™ – Genouillère de compression thermique pour maintien du genou",
-    "price": 290000,
+    "price": 270000,
     "priceOld": 349000,
     "currency": "GNF",
     "category": "education",
@@ -348,13 +348,13 @@
     "pays": "GN",
     "bundle": "yes",
      "offres": [
-      { "qty": 1, "price": 290000, "oldPrice": 349000, "title": "🥉1 Genouillère Flytex™" },
-      { "qty": 2, "price": 360000, "oldPrice": 420000, "title": "🥈 ⭐ 2 Genouillère Flytex™ - 1 Paire (Offre Recommandé)" },
+      { "qty": 1, "price": 270000, "oldPrice": 349000, "title": "🥉1 Genouillère Flytex™" },
+      { "qty": 2, "price": 350000, "oldPrice": 420000, "title": "🥈 ⭐ 2 Genouillère Flytex™ - 1 Paire (Offre Recommandé)" },
       { "qty": 4, "price": 470000, "oldPrice": 680000, "title": "🥇 ⭐ Achetez 2 – Obtenez 2 Pièces Gratuite (4 Pièces)" }
     ],
     "countdown": "NO",
     "animated": "yes",
-    "isLandingPage": "no",
+    "isLandingPage": "yes",
     "modeBlack": "no",
     "showQuantity": "NO",
     "couleur": "",

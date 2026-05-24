@@ -219,7 +219,7 @@ const renderHome = () => {
                 <p>Livraison gratuite · Paiement à la livraison</p>
             </div>
             <div class="catalogue-grid">
-                ${products.map(p => `
+                ${products.slice(0, 4).map(p => `
                     <a class="pcard ${p.modeBlack === 'yes' ? 'mode-nuit' : ''}" href="/product/${p.id}">
                         <div class="pcard-img">
                             <img src="${optimizeBloggerImg(p.featuredImage, 400)}" alt="${p.title}" loading="lazy">

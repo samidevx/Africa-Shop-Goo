@@ -297,8 +297,25 @@ const renderProduct = (p) => {
                 let desc = p.description;
                 // For LP, the first image is likely the LCP. Let's make it eager and optimized.
                 let imgCount = 0;
-                return desc.replace(/<img([^>]+)>/g, (match, attrs) => {
+                return desc.replace(/<img([^>]+)>/gi, (match, attrs) => {
                     imgCount++;
+                    
+                    // Auto-fill alt if missing or empty
+                    if (!/alt\s*=\s*["'][^"']+["']/i.test(attrs)) {
+                        let imgName = p.title;
+                        const srcMatch = attrs.match(/src\s*=\s*["']([^"']+)["']/i);
+                        if (srcMatch && srcMatch[1]) {
+                            const urlStr = srcMatch[1];
+                            const filename = urlStr.substring(urlStr.lastIndexOf('/') + 1).split('?')[0].split('.')[0];
+                            if (filename) imgName = decodeURIComponent(filename).replace(/[-_]/g, ' ');
+                        }
+                        if (/alt\s*=\s*["']\s*["']/i.test(attrs)) {
+                            attrs = attrs.replace(/alt\s*=\s*["']\s*["']/i, ` alt="${imgName}"`);
+                        } else {
+                            attrs += ` alt="${imgName}"`;
+                        }
+                    }
+
                     if (imgCount === 1) {
                         // First image: eager, high priority
                         return `<img${attrs.replace(/loading=["']lazy["']/gi, '').replace(/fetchpriority=["'][^"']*["']/gi, '')} loading="eager" fetchpriority="high">`;
@@ -322,7 +339,7 @@ const renderProduct = (p) => {
                             </div>
                             <div class="ig-thumbs" id="ig-thumbs">
                                 ${[p.featuredImage, ...(Array.isArray(p.gallery) ? p.gallery : (p.images || []))].map((img, i) => `
-                                    <div class="ig-thumb ${i === 0 ? 'active' : ''}" data-index="${i}"><img src="${optimizeBloggerImg(img, 200)}" loading="lazy"></div>
+                                    <div class="ig-thumb ${i === 0 ? 'active' : ''}" data-index="${i}"><img src="${optimizeBloggerImg(img, 200)}" alt="${p.title} - miniature ${i + 1}" loading="lazy"></div>
                                 `).join('')}
                             </div>
                         </div>
@@ -503,7 +520,7 @@ const renderProduct = (p) => {
                 <div class="guar-card">
                     <div class="guar-icon"><i class="fa fa-shield-halved"></i></div>
                     <div class="guar-text">
-                        <h4>Garantie Satisfaction</h4>
+                        <h3>Garantie Satisfaction</h3>
                         <p>Si vous n'êtes pas satisfait, nous vous remboursons dans les 7 jours.</p>
                     </div>
                 </div>
@@ -561,9 +578,28 @@ const renderProduct = (p) => {
             const descEl = document.getElementById('d-desc-content');
             if (!descEl) return;
             // Strip competing fetchpriority=high from description images & ensure lazy loading
-            const cleanDesc = p.description
-                .replace(/fetchpriority="high"/gi, 'loading="lazy"')
-                .replace(/<img(?!([^>]*loading=))/g, '<img loading="lazy" ');
+            let cleanDesc = p.description.replace(/fetchpriority="high"/gi, 'loading="lazy"');
+            cleanDesc = cleanDesc.replace(/<img([^>]+)>/gi, (match, attrs) => {
+                // Auto-fill alt if missing or empty
+                if (!/alt\s*=\s*["'][^"']+["']/i.test(attrs)) {
+                    let imgName = p.title;
+                    const srcMatch = attrs.match(/src\s*=\s*["']([^"']+)["']/i);
+                    if (srcMatch && srcMatch[1]) {
+                        const urlStr = srcMatch[1];
+                        const filename = urlStr.substring(urlStr.lastIndexOf('/') + 1).split('?')[0].split('.')[0];
+                        if (filename) imgName = decodeURIComponent(filename).replace(/[-_]/g, ' ');
+                    }
+                    if (/alt\s*=\s*["']\s*["']/i.test(attrs)) {
+                        attrs = attrs.replace(/alt\s*=\s*["']\s*["']/i, ` alt="${imgName}"`);
+                    } else {
+                        attrs += ` alt="${imgName}"`;
+                    }
+                }
+                if (!/loading=/i.test(attrs)) {
+                    attrs += ' loading="lazy"';
+                }
+                return `<img${attrs}>`;
+            });
             descEl.innerHTML = cleanDesc;
         };
         if ('requestIdleCallback' in window) {

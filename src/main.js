@@ -346,9 +346,7 @@ const renderProduct = (p) => {
                     ` : `
                         <img src="${p.featuredImage}" alt="${p.title}" fetchpriority="high" loading="eager">
                     `}
-                    <div class="prod-badges">
-                        <span class="badge badge-sale">🔥 Offre Spéciale</span>
-                    </div>
+
                 </div>
                 ` : ''}
                 <div class="prod-info">
